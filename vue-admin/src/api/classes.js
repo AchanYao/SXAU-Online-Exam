@@ -18,3 +18,7 @@ export function deleteClass(id) {
 export function updateClass(data) {
   return service.put('/api/classes/update', data)
 }
+
+export function classCount() {
+  return service.get('/api/classes/count')
+}

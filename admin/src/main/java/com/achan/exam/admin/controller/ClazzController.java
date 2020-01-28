@@ -77,4 +77,10 @@ public class ClazzController {
     public List<Clazz> searchClazz(@RequestParam String keyword) {
         return clazzService.list(new QueryWrapper<Clazz>().lambda().like(Clazz::getName, keyword));
     }
+
+    @GetMapping("/count")
+    @ApiOperation("班级数量")
+    public int count() {
+        return clazzService.count();
+    }
 }

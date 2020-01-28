@@ -178,6 +178,7 @@
   import BScroll from 'better-scroll'
   import InvestmentPie from '@/views/homepage/investment-pie'
   import FinancingPie from '@/views/homepage/financing-pie'
+  import {classCount} from '../../api/classes'
 
   export default {
     components: {
@@ -192,7 +193,8 @@
         rankList: [],
         numAnim: null,
         userCount: 0,
-        coursesCount: 0
+        coursesCount: 0,
+        classesCount: 0
       }
     },
     methods: {
@@ -237,12 +239,16 @@
       coursesCount().then(result => {
         this.coursesCount = result.data
       })
+      classCount().then(result => {
+        this.classesCount = result.data
+      })
       // 获取头部hometotal
       getHomeTotal().then((resp) => {
         this.homeTotalData = resp.data
         this.initCountUp()
         this.homeTotalData[0].value = this.userCount
         this.homeTotalData[1].value = this.coursesCount
+        this.homeTotalData[2].value = this.classesCount
       }).catch(() => {
         console.log('获取home-total出现异常')
       })

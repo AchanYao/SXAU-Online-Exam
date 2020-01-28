@@ -68,7 +68,8 @@ public class TeacherGroupController {
     }
 
     @PutMapping("/update")
-    public boolean updateTeacherDetail(@RequestBody @Validated TeacherGroupDetails teacherGroupDetails) {
+    @ApiOperation("更新课程组")
+    public boolean updateTeacherGroupDetail(@RequestBody @Validated TeacherGroupDetails teacherGroupDetails) {
         TeacherGroup teacherGroup = new TeacherGroup()
                 .setId(teacherGroupDetails.getTeacherGroupOverview().getId())
                 .setPrincipalId(teacherGroupDetails.getTeacherGroupOverview().getPrincipalId())
@@ -104,6 +105,7 @@ public class TeacherGroupController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("删除指定课程组")
     public boolean delete(@PathVariable int id) {
         return teacherGroupService.removeById(id);
     }

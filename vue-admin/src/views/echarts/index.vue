@@ -11,8 +11,9 @@
         <catelog-brand width="100%" height="100%" :x-data="catelogXData" :y-data="catelogYData" @gotoList="handlerToList"></catelog-brand>
       </div>
       <!-- 数量统计-细分类别数据 -->
+<!--
       <el-row class="details-wrapper" :gutter="30">
-        <!-- 数量细分类别展示 -->
+        &lt;!&ndash; 数量细分类别展示 &ndash;&gt;
         <el-col :span="8">
           <div class="detail-wrapper">
             <div class="header">
@@ -24,7 +25,7 @@
           </div>
         </el-col>
 
-        <!-- 数量排行展示 -->
+        &lt;!&ndash; 数量排行展示 &ndash;&gt;
         <el-col :span="8">
           <div class="num-top10">
             <div class="header">
@@ -36,7 +37,7 @@
           </div>
         </el-col>
 
-        <!-- 完成率排行展示 -->
+        &lt;!&ndash; 完成率排行展示 &ndash;&gt;
         <el-col :span="8">
           <div class="rate-top10">
             <div class="header">
@@ -49,6 +50,7 @@
         </el-col>
 
       </el-row>
+-->
     </div>
     <!-- 数据列表-->
     <data-list v-if="showFlag === 2"
