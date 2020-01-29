@@ -23,16 +23,27 @@ public class SwaggerConfig {
     public Docket adminApiConfig() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("admin")
-                .apiInfo(adminApiInfo())
+                .apiInfo(adminApiInfo("管理端"))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.achan.exam.admin"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
-    private ApiInfo adminApiInfo() {
+    @Bean
+    public Docket questionBank() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("question-bank")
+                .apiInfo(adminApiInfo("题库"))
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.qbank"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo adminApiInfo(String description) {
         return new ApiInfoBuilder()
-                .title("山西农业大学软件学院阶段性考核系统-管理端")
+                .title("山西农业大学软件学院阶段性考核系统-" + description)
                 .version("1.0")
                 .build();
     }

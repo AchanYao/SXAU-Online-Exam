@@ -6,6 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 统一响应拦截注解
+ *
  * @author Achan
  * @date 2020/1/15
  */

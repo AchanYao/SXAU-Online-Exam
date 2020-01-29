@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
+
 /**
  * @author Achan
  * @date 2020/1/15
@@ -22,6 +24,12 @@ public class ExamExceptionHandler {
     public R handleException(Exception e) {
         log.error(e.getMessage(), e);
         return R.setResult(ResultCodeEnum.UNKNOWN_REASON).message(e.getMessage());
+    }
+
+    @ExceptionHandler(SQLException.class)
+    public R handleSqlException(SQLException e) {
+        log.error(e.getMessage(), e);
+        return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
     }
 
     @ExceptionHandler(RuntimeException.class)
