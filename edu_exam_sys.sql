@@ -11,11 +11,34 @@
  Target Server Version : 100312
  File Encoding         : 65001
 
- Date: 27/01/2020 22:44:47
+ Date: 29/01/2020 16:18:32
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for answer
+-- ----------------------------
+DROP TABLE IF EXISTS `answer`;
+CREATE TABLE `answer`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime(0) NOT NULL,
+  `modify_time` datetime(0) NOT NULL,
+  `question_id` int(11) NOT NULL COMMENT '问题id',
+  `content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '答案内容',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `answer_ibfk_1`(`question_id`) USING BTREE,
+  CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '参考答案' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of answer
+-- ----------------------------
+INSERT INTO `answer` VALUES (1, '2020-01-29 12:59:10', '2020-01-29 12:59:13', 1, '.java');
+INSERT INTO `answer` VALUES (2, '2020-01-29 13:05:22', '2020-01-29 13:05:25', 2, '.class');
+INSERT INTO `answer` VALUES (4, '2020-01-29 13:21:16', '2020-01-29 13:21:20', 3, 'T');
+INSERT INTO `answer` VALUES (5, '2020-01-29 13:37:48', '2020-01-29 13:37:52', 4, 'public class Main {\r\n\r\n    public static void main(String[] args) {\r\n        System.out.println(\"hello world\");\r\n    }\r\n}\r\n');
 
 -- ----------------------------
 -- Table structure for chapter
@@ -28,8 +51,27 @@ CREATE TABLE `chapter`  (
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '章节名',
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '对该章节知识点的简单概括',
   `course_id` int(11) NOT NULL COMMENT '所属课程id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '章节' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `course_id`(`course_id`) USING BTREE,
+  CONSTRAINT `chapter_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '章节' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of chapter
+-- ----------------------------
+INSERT INTO `chapter` VALUES (1, '2020-01-29 12:31:12', '2020-01-29 12:31:16', '计算机、程序和Java概述', 'Java第一章', 4);
+INSERT INTO `chapter` VALUES (2, '2020-01-29 12:35:16', '2020-01-29 12:35:19', '基本程序设计', 'Java第二章', 4);
+INSERT INTO `chapter` VALUES (3, '2020-01-29 12:35:51', '2020-01-29 12:35:55', '选择', 'Java第三章', 4);
+INSERT INTO `chapter` VALUES (4, '2020-01-29 12:36:18', '2020-01-29 12:36:22', '数学函数、字符和字符串', 'Java第四章', 4);
+INSERT INTO `chapter` VALUES (5, '2020-01-29 12:37:07', '2020-01-29 12:37:10', '循环', 'Java第五章', 4);
+INSERT INTO `chapter` VALUES (6, '2020-01-29 12:37:32', '2020-01-29 12:37:37', '方法', 'Java第六章', 4);
+INSERT INTO `chapter` VALUES (7, '2020-01-29 12:37:56', '2020-01-29 12:38:04', '一维数组', 'Java第七章', 4);
+INSERT INTO `chapter` VALUES (8, '2020-01-29 12:38:28', '2020-01-29 12:38:31', '多维数组', 'Java第八章', 4);
+INSERT INTO `chapter` VALUES (9, '2020-01-29 12:38:58', '2020-01-29 12:39:02', '对象和类', 'Java第九章', 4);
+INSERT INTO `chapter` VALUES (10, '2020-01-29 12:39:25', '2020-01-29 12:39:28', '面向对象思考', 'Java第十章', 4);
+INSERT INTO `chapter` VALUES (11, '2020-01-29 12:39:49', '2020-01-29 12:39:51', '继承和多态', 'Java第十一章', 4);
+INSERT INTO `chapter` VALUES (12, '2020-01-29 12:40:19', '2020-01-29 12:40:21', '异常处理和文本IO', 'Java第十二章', 4);
+INSERT INTO `chapter` VALUES (13, '2020-01-29 12:40:54', '2020-01-29 12:40:58', '抽象类和接口', 'Java第十三章', 4);
 
 -- ----------------------------
 -- Table structure for classroom
@@ -114,6 +156,28 @@ CREATE TABLE `exam_mid`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '考试安排表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for fill_blank_question
+-- ----------------------------
+DROP TABLE IF EXISTS `fill_blank_question`;
+CREATE TABLE `fill_blank_question`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `question_id` int(11) NOT NULL COMMENT '题目id',
+  `student_id` int(11) NULL DEFAULT NULL,
+  `teacher_id` int(11) NULL DEFAULT NULL,
+  `blank_count` int(3) NOT NULL COMMENT '本题应填答案个数',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `question_id`(`question_id`) USING BTREE,
+  CONSTRAINT `fill_blank_question_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '填空题' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of fill_blank_question
+-- ----------------------------
+INSERT INTO `fill_blank_question` VALUES (1, '2020-01-29 13:02:31', '2020-01-29 13:02:35', 2, NULL, NULL, 1);
+
+-- ----------------------------
 -- Table structure for multiple_choice
 -- ----------------------------
 DROP TABLE IF EXISTS `multiple_choice`;
@@ -126,11 +190,17 @@ CREATE TABLE `multiple_choice`  (
   `option_b` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '选项B',
   `option_c` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '选项C',
   `option_d` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '选项D',
-  `answer` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '答案',
   `student_id` int(11) NULL DEFAULT NULL COMMENT '提供该题的学生id',
   `teacher_id` int(11) NULL DEFAULT NULL COMMENT '录入题库的教师id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '单项选择题' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `question_id`(`question_id`) USING BTREE,
+  CONSTRAINT `multiple_choice_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '单项选择题' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of multiple_choice
+-- ----------------------------
+INSERT INTO `multiple_choice` VALUES (1, 1, '2020-01-29 12:58:23', '2020-01-29 12:58:26', '.class', '.java', '.jar', '.exe', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for program_input
@@ -141,10 +211,17 @@ CREATE TABLE `program_input`  (
   `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `program_id` int(11) NOT NULL COMMENT '编程题id',
-  `input` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '样例输入',
+  `input` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '样例输入',
   `output` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '样例输出',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '编程题的输入输出' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `program_id`(`program_id`) USING BTREE,
+  CONSTRAINT `program_input_ibfk_1` FOREIGN KEY (`program_id`) REFERENCES `program_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '编程题的输入输出' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of program_input
+-- ----------------------------
+INSERT INTO `program_input` VALUES (1, '2020-01-29 13:35:54', '2020-01-29 13:35:58', 1, '', 'hello world');
 
 -- ----------------------------
 -- Table structure for program_questions
@@ -154,13 +231,18 @@ CREATE TABLE `program_questions`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `description` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题目描述',
-  `answer_id` int(11) NOT NULL COMMENT '参考答案',
-  `student_id` int(11) NOT NULL COMMENT '提供该题的学生id',
+  `student_id` int(11) NULL DEFAULT NULL COMMENT '提供该题的学生id',
   `teacher_id` int(11) NULL DEFAULT NULL COMMENT '加入该题的教师id',
-  `question_id` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '编程题实体' ROW_FORMAT = Dynamic;
+  `question_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `question_id`(`question_id`) USING BTREE,
+  CONSTRAINT `program_questions_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '编程题实体' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of program_questions
+-- ----------------------------
+INSERT INTO `program_questions` VALUES (1, '2020-01-29 13:36:16', '2020-01-29 13:36:19', NULL, NULL, 4);
 
 -- ----------------------------
 -- Table structure for question
@@ -172,10 +254,20 @@ CREATE TABLE `question`  (
   `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `type_id` int(11) NOT NULL COMMENT '类型id',
   `chapter_id` int(11) NOT NULL COMMENT '对应章节id',
-  `description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题目简介',
+  `description` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题目简介',
   `difficulty_id` int(11) NOT NULL COMMENT '难度等级',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '问题实体' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `chapter_id`(`chapter_id`) USING BTREE,
+  CONSTRAINT `question_ibfk_1` FOREIGN KEY (`chapter_id`) REFERENCES `chapter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '问题实体' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of question
+-- ----------------------------
+INSERT INTO `question` VALUES (1, '2020-01-29 12:49:58', '2020-01-29 12:49:55', 1, 1, 'Java源文件扩展名', 1);
+INSERT INTO `question` VALUES (2, '2020-01-29 12:51:07', '2020-01-29 12:51:11', 2, 1, 'Java字节码文件扩展名（#）', 1);
+INSERT INTO `question` VALUES (3, '2020-01-29 13:04:56', '2020-01-29 13:05:00', 3, 1, 'Java是平台无关的', 1);
+INSERT INTO `question` VALUES (4, '2020-01-29 13:33:51', '2020-01-29 13:33:55', 5, 1, '用Java语言输出 hello world', 1);
 
 -- ----------------------------
 -- Table structure for question_difficulty
@@ -186,7 +278,14 @@ CREATE TABLE `question_difficulty`  (
   `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '描述',
   `name_zh` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '描述（中文）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '题目难度表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '题目难度表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of question_difficulty
+-- ----------------------------
+INSERT INTO `question_difficulty` VALUES (1, 'easy', '容易');
+INSERT INTO `question_difficulty` VALUES (2, 'medium', '中等');
+INSERT INTO `question_difficulty` VALUES (3, 'difficult', '困难');
 
 -- ----------------------------
 -- Table structure for question_type
@@ -194,10 +293,19 @@ CREATE TABLE `question_difficulty`  (
 DROP TABLE IF EXISTS `question_type`;
 CREATE TABLE `question_type`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型名',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型名',
   `name_zh` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型名（中文）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '问题类型' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '问题类型' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of question_type
+-- ----------------------------
+INSERT INTO `question_type` VALUES (1, 'multiple choice', '单选题');
+INSERT INTO `question_type` VALUES (2, 'fill blank question', '填空题');
+INSERT INTO `question_type` VALUES (3, 'true or false', '判断题');
+INSERT INTO `question_type` VALUES (4, 'subjective question', '主观题');
+INSERT INTO `question_type` VALUES (5, 'program question', '编程题');
 
 -- ----------------------------
 -- Table structure for role
@@ -279,11 +387,11 @@ CREATE TABLE `subjective_questions`  (
   `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `question_id` int(11) NOT NULL COMMENT '题目id',
-  `answer_id` int(11) NOT NULL COMMENT '参考答案',
-  `description` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题目描述',
   `student_id` int(11) NULL DEFAULT NULL COMMENT '提供该题的学生id',
   `teacher_id` int(11) NULL DEFAULT NULL COMMENT '录入教师id',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `question_id`(`question_id`) USING BTREE,
+  CONSTRAINT `subjective_questions_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '主观题实体' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -295,12 +403,17 @@ CREATE TABLE `t_or_f_question`  (
   `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `question_id` int(11) NOT NULL COMMENT '题目id',
-  `answer_id` int(11) NOT NULL COMMENT '参考答案',
-  `description` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题目描述',
   `student_id` int(11) NULL DEFAULT NULL,
   `teacher_id` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '判断题实体' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `question_id`(`question_id`) USING BTREE,
+  CONSTRAINT `t_or_f_question_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '判断题实体' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_or_f_question
+-- ----------------------------
+INSERT INTO `t_or_f_question` VALUES (1, '2020-01-29 13:27:38', '2020-01-29 13:27:42', 3, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for teacher
