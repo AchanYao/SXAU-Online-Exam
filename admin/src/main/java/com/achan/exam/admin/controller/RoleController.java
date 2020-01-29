@@ -2,7 +2,7 @@ package com.achan.exam.admin.controller;
 
 import com.achan.exam.common.annotation.BaseResponse;
 import com.achan.exam.common.entity.Role;
-import com.achan.exam.common.entity.RoleEnum;
+import com.achan.exam.common.vo.enumerate.RoleEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;

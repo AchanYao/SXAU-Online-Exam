@@ -1,6 +1,6 @@
 package com.achan.exam.admin.task;
 
-import com.achan.exam.common.entity.RoleEnum;
+import com.achan.exam.common.vo.enumerate.RoleEnum;
 import com.achan.exam.common.entity.Student;
 import com.achan.exam.common.entity.User;
 import com.achan.exam.common.entity.UserRole;

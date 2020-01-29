@@ -1,4 +1,4 @@
-package com.achan.exam.common.entity;
+package com.achan.exam.common.vo.enumerate;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -10,6 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public enum RoleEnum {
+    // TODO 将用户角色改成启动任务，系统启动时从数据库中读取现有用户角色
 
     /**
      * 学生

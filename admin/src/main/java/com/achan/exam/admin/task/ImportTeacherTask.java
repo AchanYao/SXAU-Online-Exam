@@ -2,11 +2,11 @@ package com.achan.exam.admin.task;
 
 import com.achan.exam.common.entity.*;
 import com.achan.exam.common.exception.InsertUserException;
-import com.achan.exam.common.service.impl.StudentServiceImpl;
 import com.achan.exam.common.service.impl.TeacherServiceImpl;
 import com.achan.exam.common.service.impl.UserRoleServiceImpl;
 import com.achan.exam.common.service.impl.UserServiceImpl;
 import com.achan.exam.common.task.ImportDataTask;
+import com.achan.exam.common.vo.enumerate.RoleEnum;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.Data;
 import lombok.experimental.Accessors;
