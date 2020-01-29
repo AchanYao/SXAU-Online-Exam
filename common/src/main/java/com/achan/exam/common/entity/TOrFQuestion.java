@@ -43,9 +43,6 @@ public class TOrFQuestion implements Serializable {
     @ApiModelProperty(value = "参考答案")
     private Integer answerId;
 
-    @ApiModelProperty(value = "题目描述")
-    private String description;
-
     private Integer studentId;
 
     private Integer teacherId;

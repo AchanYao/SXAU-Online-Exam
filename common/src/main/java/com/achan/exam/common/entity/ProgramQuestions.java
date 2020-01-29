@@ -37,9 +37,6 @@ public class ProgramQuestions implements Serializable {
     @TableField(fill = FieldFill.INSERT, update = "now()")
     private Date createTime;
 
-    @ApiModelProperty(value = "题目描述")
-    private String description;
-
     @ApiModelProperty(value = "参考答案")
     private Integer answerId;
 
@@ -49,6 +46,7 @@ public class ProgramQuestions implements Serializable {
     @ApiModelProperty(value = "加入该题的教师id")
     private Integer teacherId;
 
+    @ApiModelProperty(value = "问题id")
     private Integer questionId;
 
 

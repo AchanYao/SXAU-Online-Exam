@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 单项选择题
+ * 判断题实体
  * </p>
  *
  * @author Achan
@@ -23,15 +23,13 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="MultipleChoice对象", description="单项选择题")
-public class MultipleChoice implements Serializable {
+@ApiModel(value="FillBlankQuestion对象", description="填空题实体")
+public class FillBlankQuestion implements Serializable {
 
     private static final long serialVersionUID=1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
-    private Integer questionId;
 
     @TableField(fill = FieldFill.INSERT, update = "now()")
     private Date createTime;
@@ -39,22 +37,20 @@ public class MultipleChoice implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE, update = "now()")
     private Date modifyTime;
 
-    @ApiModelProperty(value = "选项A")
-    private String optionA;
+    @ApiModelProperty(value = "题目id")
+    private Integer questionId;
 
-    @ApiModelProperty(value = "选项B")
-    private String optionB;
+    @ApiModelProperty(value = "参考答案")
+    private Integer answerId;
 
-    @ApiModelProperty(value = "选项C")
-    private String optionC;
+    @ApiModelProperty(value = "题目描述")
+    private String description;
 
-    @ApiModelProperty(value = "选项D")
-    private String optionD;
+    @ApiModelProperty(value = "本题应填答案个数")
+    private Integer blankCount;
 
-    @ApiModelProperty(value = "提供该题的学生id")
     private Integer studentId;
 
-    @ApiModelProperty(value = "录入题库的教师id")
     private Integer teacherId;
 
 
