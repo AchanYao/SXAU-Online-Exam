@@ -39,12 +39,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("memory-client")
+                .withClient("online-exam")
                 .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(60 * 3 * 10)
                 .resourceIds("resourceId")
                 .scopes("all")
-                .secret(passwordEncoder().encode("achanyao"));
+                .secret(passwordEncoder().encode("123456"));
     }
 
     @Override

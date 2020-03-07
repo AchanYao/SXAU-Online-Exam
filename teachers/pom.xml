@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>com.achan.exam</groupId>
-            <artifactId>security</artifactId>
+            <artifactId>auth-client</artifactId>
             <version>${exam.version}</version>
         </dependency>
         <dependency>

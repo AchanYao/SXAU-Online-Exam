@@ -30,10 +30,10 @@
         <module>admin</module>
         <module>common</module>
         <module>restful-api</module>
-        <module>security</module>
         <module>question-bank</module>
         <module>teachers</module>
         <module>auth-server</module>
+        <module>auth-client</module>
     </modules>
 
     <dependencies>

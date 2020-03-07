@@ -1,0 +1,25 @@
+{
+  "group": [
+    {
+      "name": "security.oauth2.client",
+      "description": "资源服务器自身配置。"
+    }
+  ],
+  "properties": [
+    {
+      "name": "security.oauth2.client.client-id",
+      "description": "资源服务器id。",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "security.oauth2.client.client-secret",
+      "description": "资源服务器密码。",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "security.oauth2.client.access-token-uri",
+      "description": "认证服务器请求url",
+      "type": "java.lang.String"
+    }
+  ]
+}

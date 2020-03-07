@@ -1,3 +1,4 @@
+
 spring:
   # redis
   redis:
@@ -21,3 +22,5 @@ logging:
     ROOT: warn
     com:
       achan: debug
+server:
+  port: 7000

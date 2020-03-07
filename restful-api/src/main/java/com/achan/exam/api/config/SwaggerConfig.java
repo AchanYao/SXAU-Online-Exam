@@ -1,6 +1,5 @@
 package com.achan.exam.api.config;
 
-import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -37,6 +36,28 @@ public class SwaggerConfig {
                 .apiInfo(adminApiInfo("题库"))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.achan.exam.qbank"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
+    public Docket authServer() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("auth-server")
+                .apiInfo(adminApiInfo("oauth2授权服务器"))
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.auth.server"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
+    public Docket authClient() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("auth-client")
+                .apiInfo(adminApiInfo("oauth2资源服务器"))
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.auth.client"))
                 .paths(PathSelectors.any())
                 .build();
     }
