@@ -1,16 +1,17 @@
 package com.achan.exam.common.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -49,5 +50,10 @@ public class Question implements Serializable {
     @ApiModelProperty(value = "难度等级")
     private Integer difficultyId;
 
+    @ApiModelProperty(value = "提供该题的学生id")
+    private Integer modifyStudentId;
 
+    @ApiModelProperty(value = "录入题库的教师id")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Integer modifyUserId;
 }

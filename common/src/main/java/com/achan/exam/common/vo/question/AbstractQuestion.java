@@ -2,16 +2,17 @@ package com.achan.exam.common.vo.question;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * @author Achan
  * @date 2020/1/29
  */
 @Data
+@Accessors(chain = true)
 public abstract class AbstractQuestion {
 
     protected Integer id;
@@ -22,7 +23,7 @@ public abstract class AbstractQuestion {
     @ApiModelProperty(value = "问题描述")
     @NotNull
     @NotBlank
-    protected String description;
+    protected String questionDescription;
 
     @ApiModelProperty(value = "参考答案")
     @NotNull

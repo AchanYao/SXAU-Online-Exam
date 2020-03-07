@@ -1,6 +1,6 @@
 package com.achan.exam.common.mapper;
 
-import com.achan.exam.common.entity.SubjectiveQuestions;
+import com.achan.exam.common.entity.SubjectiveQuestion;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Achan
  * @since 2020-01-13
  */
-public interface SubjectiveQuestionsMapper extends BaseMapper<SubjectiveQuestions> {
+public interface SubjectiveQuestionMapper extends BaseMapper<SubjectiveQuestion> {
 
 }

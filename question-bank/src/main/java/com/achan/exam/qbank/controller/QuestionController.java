@@ -1,14 +1,11 @@
 package com.achan.exam.qbank.controller;
 
 import com.achan.exam.common.annotation.BaseResponse;
-import com.achan.exam.common.entity.Answer;
-import com.achan.exam.common.entity.MultipleChoice;
-import com.achan.exam.common.entity.Question;
-import com.achan.exam.common.service.impl.AnswerServiceImpl;
-import com.achan.exam.common.service.impl.MultipleChoiceServiceImpl;
-import com.achan.exam.common.service.impl.QuestionServiceImpl;
-import com.achan.exam.common.vo.question.MultipleChoiceDetail;
+import com.achan.exam.common.entity.*;
+import com.achan.exam.common.service.impl.*;
+import com.achan.exam.common.vo.question.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/questions")
 @RestController
 @BaseResponse
-@Api("题库问题")
+@Api("题库控制器")
 public class QuestionController {
 
     @Autowired
@@ -31,6 +28,16 @@ public class QuestionController {
     private AnswerServiceImpl answerService;
     @Autowired
     private MultipleChoiceServiceImpl multipleChoiceService;
+    @Autowired
+    private FillBlankQuestionServiceImpl fillBlankQuestionService;
+    @Autowired
+    private TOrFQuestionServiceImpl tOrFQuestionService;
+    @Autowired
+    private SubjectiveQuestionServiceImpl subjectiveQuestionService;
+    @Autowired
+    private ProgramQuestionServiceImpl programQuestionService;
+    @Autowired
+    private ProgramInputServiceImpl programInputService;
 
     @ApiOperation("检索题库")
     @GetMapping("/page")
@@ -38,15 +45,79 @@ public class QuestionController {
                                        @RequestParam(required = false, defaultValue = "10") int size,
                                        @RequestParam(required = false, name = "t") Integer type,
                                        @RequestParam(required = false, name = "d") Integer difficult) {
-        Page pageE = new Page(page, size);
+        Page<Question> pageE = new Page<>(page, size);
         LambdaQueryWrapper<Question> questionLambdaQueryWrapper = new LambdaQueryWrapper<>();
         if (difficult != null) {
-            questionLambdaQueryWrapper.eq(Question::getDifficultyId, difficult);
+            questionLambdaQueryWrapper = questionLambdaQueryWrapper.eq(Question::getDifficultyId, difficult);
         }
         if (type != null) {
-            questionLambdaQueryWrapper.eq(Question::getTypeId, type);
+            questionLambdaQueryWrapper = questionLambdaQueryWrapper.eq(Question::getTypeId, type);
         }
         return questionService.page(pageE, questionLambdaQueryWrapper);
+    }
+
+    @ApiOperation("查看问题")
+    @GetMapping("/{id}")
+    public AbstractQuestion question(@PathVariable int id) {
+        Question question = questionService.getById(id);
+        Answer answer = answerService.getOne(new LambdaQueryWrapper<Answer>().eq(Answer::getQuestionId, question.getId()));
+        switch (question.getTypeId()) {
+            case 1: {
+                // 单选题
+                MultipleChoiceDetail multipleChoiceDetail = (MultipleChoiceDetail) fillQuestion(new MultipleChoiceDetail(), question)
+                        .setAnswer(answer.getContent());
+                MultipleChoice multipleChoice = multipleChoiceService.getOne(new QueryWrapper<MultipleChoice>()
+                        .lambda().eq(MultipleChoice::getQuestionId, question.getId()));
+                multipleChoiceDetail
+                        .setOptionA(multipleChoice.getOptionA())
+                        .setOptionB(multipleChoice.getOptionB())
+                        .setOptionC(multipleChoice.getOptionC())
+                        .setOptionD(multipleChoice.getOptionD());
+                return multipleChoiceDetail;
+            }
+            case 2: {
+                // 填空题
+                FillBlankDetail fillBlankDetail = (FillBlankDetail) fillQuestion(new FillBlankDetail(), question)
+                        .setAnswer(answer.getContent());
+                FillBlankQuestion fillBlankQuestion = fillBlankQuestionService.getOne(new QueryWrapper<FillBlankQuestion>()
+                        .lambda().eq(FillBlankQuestion::getQuestionId, question.getId()));
+                fillBlankDetail.setBlankCount(fillBlankQuestion.getBlankCount());
+                return fillBlankDetail;
+            }
+            case 3: {
+                // 判断题
+                TrueOrFalseDetail trueOrFalseDetail = (TrueOrFalseDetail) fillQuestion(new TrueOrFalseDetail(), question)
+                        .setAnswer(answer.getContent());
+                TOrFQuestion tOrFQuestion = tOrFQuestionService.getOne(new QueryWrapper<TOrFQuestion>()
+                        .lambda().eq(TOrFQuestion::getQuestionId, question.getId()));
+                trueOrFalseDetail.setTeacherId(tOrFQuestion.getTeacherId())
+                        .setStudentId(tOrFQuestion.getStudentId());
+                return trueOrFalseDetail;
+            }
+            case 4: {
+                // 主观题
+                SubjectiveQuestionDetail subjectiveQuestionDetail = (SubjectiveQuestionDetail) fillQuestion(new SubjectiveQuestionDetail(), question)
+                        .setAnswer(answer.getContent());
+                SubjectiveQuestion subjectiveQuestion = subjectiveQuestionService.getOne(new QueryWrapper<SubjectiveQuestion>()
+                        .lambda().eq(SubjectiveQuestion::getQuestionId, question.getId()));
+                subjectiveQuestionDetail.setTeacherId(subjectiveQuestion.getTeacherId())
+                        .setStudentId(subjectiveQuestion.getStudentId());
+                return subjectiveQuestionDetail;
+            }
+            case 5: {
+                // 编程题
+                ProgramQuestionDetail programQuestionDetail = (ProgramQuestionDetail) fillQuestion(new ProgramQuestionDetail(), question)
+                        .setAnswer(answer.getContent());
+                ProgramQuestion programQuestion = programQuestionService.getOne(new QueryWrapper<ProgramQuestion>()
+                        .lambda().eq(ProgramQuestion::getQuestionId, question.getId()));
+                programQuestionDetail
+                        .setInputs(programInputService.list(new QueryWrapper<ProgramInput>()
+                                .lambda().eq(ProgramInput::getProgramId, programQuestion.getId())));
+                return programQuestionDetail;
+            }
+            default:
+                throw new RuntimeException("未知类型id：" + question.getTypeId());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
@@ -55,26 +126,28 @@ public class QuestionController {
         return questionService.removeById(id);
     }
 
-    @PostMapping("/mc/add")
-    @ApiOperation("新增单选问题")
-    public boolean addMultipleChoice(@RequestBody MultipleChoiceDetail multipleChoiceDetail) {
-        Question question = new Question()
-                .setChapterId(multipleChoiceDetail.getChapterId())
-                .setDifficultyId(multipleChoiceDetail.getDifficultyId())
-                .setDescription(multipleChoiceDetail.getDescription())
-                .setTypeId(multipleChoiceDetail.getTypeId());
-        questionService.save(question);
-        Answer answer = new Answer()
-                .setContent(multipleChoiceDetail.getAnswer())
-                .setQuestionId(question.getId());
-        answerService.save(answer);
-        MultipleChoice multipleChoice = new MultipleChoice()
-                .setQuestionId(question.getId())
-                .setOptionA(multipleChoiceDetail.getOptionA())
-                .setOptionB(multipleChoiceDetail.getOptionB())
-                .setOptionC(multipleChoiceDetail.getOptionC())
-                .setOptionD(multipleChoiceDetail.getOptionD());
-        return multipleChoiceService.save(multipleChoice);
+    private static AbstractQuestion fillQuestion(AbstractQuestion q, Question question) {
+        q.setQuestionId(question.getId())
+                .setQuestionDescription(question.getDescription())
+                .setChapterId(question.getChapterId())
+                .setDifficultyId(question.getDifficultyId())
+                .setTypeId(question.getTypeId());
+        return q;
     }
 
+    public static Question getQuestionByDetail(AbstractQuestion abstractQuestion) {
+        return new Question()
+                .setChapterId(abstractQuestion.getChapterId())
+                .setDifficultyId(abstractQuestion.getDifficultyId())
+                .setDescription(abstractQuestion.getQuestionDescription())
+                .setModifyStudentId(abstractQuestion.getStudentId())
+                .setModifyUserId(abstractQuestion.getTeacherId())
+                .setTypeId(abstractQuestion.getTypeId());
+    }
+
+    public static Answer getAnswerByDetail(AbstractQuestion abstractQuestion) {
+        return new Answer()
+                .setContent(abstractQuestion.getAnswer())
+                .setQuestionId(abstractQuestion.getQuestionId());
+    }
 }

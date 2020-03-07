@@ -1,6 +1,6 @@
 package com.achan.exam.common.service;
 
-import com.achan.exam.common.entity.SubjectiveQuestions;
+import com.achan.exam.common.entity.SubjectiveQuestion;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Achan
  * @since 2020-01-13
  */
-public interface ISubjectiveQuestionsService extends IService<SubjectiveQuestions> {
+public interface ISubjectiveQuestionService extends IService<SubjectiveQuestion> {
 
 }

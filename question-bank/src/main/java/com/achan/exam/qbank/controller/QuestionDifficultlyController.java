@@ -2,9 +2,7 @@ package com.achan.exam.qbank.controller;
 
 import com.achan.exam.common.annotation.BaseResponse;
 import com.achan.exam.common.entity.QuestionDifficulty;
-import com.achan.exam.common.entity.QuestionType;
 import com.achan.exam.common.vo.enumerate.QuestionDifficultyEnum;
-import com.achan.exam.common.vo.enumerate.QuestionTypeEnum;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -3,6 +3,10 @@ package com.achan.exam.common.vo;
 import lombok.Getter;
 
 /**
+ * <p>响应结果集</p>
+ * <p>25开头错误表示服务器错误</p>
+ * <p>21开头表示请求错误，如参数缺失，数据插入错误</p>
+ *
  * @author Achan
  * @since 2020/1/14
  */
@@ -19,7 +23,7 @@ public enum ResultCodeEnum {
     /**
      * sql语法错误
      */
-    BAD_SQL_GRAMMAR(false, 21001, "sql语法错误"),
+    BAD_SQL_GRAMMAR(false, 25001, "sql语法错误"),
     /**
      * json解析错误
      */
@@ -48,6 +52,10 @@ public enum ResultCodeEnum {
      * 数据保存错误
      */
     DATA_SAVE_ERROR(false, 21008, "数据保存错误"),
+    /**
+     * 访问的数据不存在
+     */
+    DATA_NOT_EXISTS(false, 21009, "访问的资源不存在")
     ;
 
     /**
