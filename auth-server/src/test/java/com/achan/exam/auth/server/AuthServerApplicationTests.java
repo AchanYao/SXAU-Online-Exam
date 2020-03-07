@@ -1,10 +1,10 @@
-package com.achan.exam.security;
+package com.achan.exam.auth.server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SecurityApplicationTests {
+class AuthServerApplicationTests {
 
     @Test
     void contextLoads() {
