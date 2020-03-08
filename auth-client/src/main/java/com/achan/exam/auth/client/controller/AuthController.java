@@ -9,14 +9,14 @@ import io.swagger.annotations.ApiOperation;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,13 +54,13 @@ public class AuthController {
     @GetMapping("/me")
     @ApiOperation("获取当前登录的用户信息")
     @PreAuthorize("isAuthenticated()")
-    public Principal authMe(Principal principal) {
-        return principal;
+    public UserDetails authMe(Authentication authentication) {
+        return (UserDetails) authentication.getPrincipal();
     }
 
     @PostMapping("/refresh")
     @ApiOperation("刷新token")
-    public OAuth2RefreshToken refreshToken(@RequestBody @NotNull @NotBlank String token) throws IOException {
+    public OAuth2AccessToken refreshToken(@RequestParam @Validated @NotNull @NotBlank String token) throws IOException {
         Map<String, Object> params = new HashMap<>(4);
         params.put("grant_type", "refresh_token");
         params.put("client_id", clientId);
@@ -68,6 +68,6 @@ public class AuthController {
         params.put("refresh_token", token);
         String result = HttpUtil.post(tokenUri, params, 1000 * 30);
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(result, OAuth2RefreshToken.class);
+        return objectMapper.readValue(result, OAuth2AccessToken.class);
     }
 }

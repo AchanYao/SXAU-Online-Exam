@@ -61,10 +61,10 @@ public class User implements Serializable, UserDetails {
     @ApiModelProperty(value = "是否被禁用")
     private Integer enable;
 
-    private transient List<Role> roles;
+    @TableField(exist = false)
+    private List<Role> roles;
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.size());
         roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));

@@ -22,6 +22,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @param id 用户id
      * @return 用户角色集合
      */
-    @Select("SELECT role.id, `name`, name_zh FROM user_role RIGHT JOIN role ON user_role.id = role.id WHERE user_id = #{id}")
+    @Select("SELECT role.id, `name`, name_zh FROM user_role LEFT JOIN role ON user_role.role_id = role.id WHERE user_id = #{id}")
     List<Role> loadRolesByUserId(Integer id);
 }
