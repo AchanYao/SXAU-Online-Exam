@@ -1,6 +1,5 @@
 package com.achan.exam.auth.client.config;
 
-import com.achan.exam.auth.client.exception.ResourceIdUnspecifiedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
@@ -20,13 +18,12 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  * @date 2020/3/7
  */
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true)
-@EnableResourceServer
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
-    @Value("${security.oauth2.resource.id}")
+    @Value("${security.oauth2.resource-id}")
     private String resourceId;
 
     @Bean
@@ -35,10 +32,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        if (resourceId == null || resourceId.isBlank()) {
-            throw new ResourceIdUnspecifiedException();
-        }
+    public void configure(ResourceServerSecurityConfigurer resources) {
         resources.tokenStore(new RedisTokenStore(redisConnectionFactory)).resourceId(resourceId).stateless(true);
     }
 

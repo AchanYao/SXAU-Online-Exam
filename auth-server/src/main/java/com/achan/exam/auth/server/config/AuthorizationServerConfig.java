@@ -2,7 +2,7 @@ package com.achan.exam.auth.server.config;
 
 import com.achan.exam.common.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
@@ -31,7 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     UserServiceImpl userService;
 
-    @Bean
+    @ConditionalOnMissingBean(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -42,20 +42,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("online-exam")
                 .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(60 * 3 * 10)
-                .resourceIds("resourceId")
+                .resourceIds("online-exam-resource")
                 .scopes("all")
                 .secret(passwordEncoder().encode("123456"));
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer security) {
         security.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
                 .allowFormAuthenticationForClients();
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
                 .authenticationManager(authenticationManager)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)

@@ -46,7 +46,7 @@ public class SwaggerConfig {
                 .groupName("auth-server")
                 .apiInfo(adminApiInfo("oauth2授权服务器"))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.auth.server"))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
     }

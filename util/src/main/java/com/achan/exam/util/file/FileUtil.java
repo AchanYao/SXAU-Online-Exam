@@ -21,13 +21,15 @@ public class FileUtil {
      * 向filePath路径文件写入context
      * @param context 需要写入的内容
      * @param filePath 指定文件路径
-     * @throws IOException
+     * @throws IOException ignore
      */
     public static void writeToFile(String context, String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             log.debug("file '{}' not exists, create it.", filePath);
-            file.createNewFile();
+            if (!file.createNewFile()) {
+                throw new RuntimeException("文件创建异常");
+            }
         }
         OutputStream outputStream = new FileOutputStream(file);
         outputStream.write(context.getBytes());
@@ -39,7 +41,7 @@ public class FileUtil {
      * 读取指定路径文本文件
      * @param path 路径
      * @return 文本文件内容
-     * @throws IOException
+     * @throws IOException ignore
      */
     public static String readTextFile(String path) throws IOException {
         File file = new File(path);
@@ -54,7 +56,7 @@ public class FileUtil {
      * 从输入流中读取文本文件
      * @param inputStream 文本文件输入流
      * @return 文本文件内容
-     * @throws IOException
+     * @throws IOException ignore
      */
     public static String readTextFile(InputStream inputStream) throws IOException {
         StringBuilder builder = new StringBuilder();
@@ -70,14 +72,14 @@ public class FileUtil {
      * 读取文本文件
      * @param file 需要读取的文件
      * @return 文本文件的内容
-     * @throws IOException
+     * @throws IOException ignore
      */
     public static String readTextFile(File file) throws IOException {
         StringBuilder builder = new StringBuilder();
         Path filePath = file.toPath();
         // try-with-resources
         try (Stream<String> lines = Files.lines(filePath)) {
-            lines.forEach(line -> builder.append(line));
+            lines.forEach(builder::append);
         }
         return builder.toString();
     }
@@ -88,11 +90,13 @@ public class FileUtil {
      * @param folder 保存到folder文件夹下
      * @param fileName 新文件的名字
      * @return 所保存的新file对象
-     * @throws IOException
+     * @throws IOException ignore
      */
     public static File transferTo(MultipartFile file, File folder, String fileName) throws IOException {
         if (!folder.isDirectory() || !folder.exists()) {
-            folder.mkdirs();
+            if (!folder.mkdirs()) {
+                throw new RuntimeException("文件创建错误");
+            }
         }
         File newFile = new File(folder, fileName);
         file.transferTo(newFile);
@@ -105,11 +109,12 @@ public class FileUtil {
      * @param file 需要保存的web文件
      * @param folder 保存到folder文件夹下
      * @return 所保存的新file对象
-     * @throws IOException
+     * @throws IOException ignore
      */
     public static File transferTo(MultipartFile file, File folder) throws IOException {
         String oldName = file.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
+        assert oldName != null;
         String newName = uuid + oldName.substring(oldName.lastIndexOf('.'));
         return transferTo(file, folder, newName);
     }

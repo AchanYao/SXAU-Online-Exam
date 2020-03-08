@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.achan.exam</groupId>
+            <artifactId>restful-api</artifactId>
+            <version>${exam.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>

@@ -1,6 +1,8 @@
 package com.achan.exam.admin.task;
 
-import com.achan.exam.common.entity.*;
+import com.achan.exam.common.entity.Teacher;
+import com.achan.exam.common.entity.User;
+import com.achan.exam.common.entity.UserRole;
 import com.achan.exam.common.exception.InsertUserException;
 import com.achan.exam.common.service.impl.TeacherServiceImpl;
 import com.achan.exam.common.service.impl.UserRoleServiceImpl;
@@ -9,10 +11,10 @@ import com.achan.exam.common.task.ImportDataTask;
 import com.achan.exam.common.vo.enumerate.RoleEnum;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +31,7 @@ import java.util.stream.Stream;
  * @author Achan
  * @date 2020/1/17
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
 @Component
@@ -55,7 +58,7 @@ public class ImportTeacherTask extends QuartzJobBean implements ImportDataTask<T
             User user = new User()
                     .setUsername(line[0])
                     .setPassword(passwordEncoder.encode(line[0]))
-                    .setActive(1);
+                    .setEnable(1);
             if (!userService.save(user)) {
                 throw new InsertUserException();
             }
@@ -78,7 +81,7 @@ public class ImportTeacherTask extends QuartzJobBean implements ImportDataTask<T
     }
 
     @Override
-    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    protected void executeInternal(JobExecutionContext jobExecutionContext) {
         importData();
     }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -32,7 +33,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="User对象", description="")
+@ApiModel(value="User对象", description="用户对象类型")
 public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID=1L;
@@ -48,6 +49,7 @@ public class User implements Serializable, UserDetails {
     @ApiModelProperty(value = "密码")
     @NotNull
     @NotBlank
+    @JsonIgnore
     private String password;
 
     @TableField(fill = FieldFill.INSERT, update = "now()")
@@ -57,11 +59,12 @@ public class User implements Serializable, UserDetails {
     private Date modifyTime;
 
     @ApiModelProperty(value = "是否被禁用")
-    private Integer isEnable;
+    private Integer enable;
 
     private transient List<Role> roles;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.size());
         roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
@@ -85,6 +88,6 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isEnable == 1;
+        return enable == 1;
     }
 }
