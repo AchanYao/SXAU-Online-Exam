@@ -1,9 +1,9 @@
 package com.achan.exam.qbank.controller;
 
 import com.achan.exam.common.annotation.BaseResponse;
+import com.achan.exam.common.dto.question.*;
 import com.achan.exam.common.entity.*;
 import com.achan.exam.common.service.impl.*;
-import com.achan.exam.common.vo.question.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -38,6 +38,31 @@ public class QuestionController {
     private ProgramQuestionServiceImpl programQuestionService;
     @Autowired
     private ProgramInputServiceImpl programInputService;
+
+    private static AbstractQuestion fillQuestion(AbstractQuestion q, Question question) {
+        q.setQuestionId(question.getId())
+                .setQuestionDescription(question.getDescription())
+                .setChapterId(question.getChapterId())
+                .setDifficultyId(question.getDifficultyId())
+                .setTypeId(question.getTypeId());
+        return q;
+    }
+
+    public static Question getQuestionByDetail(AbstractQuestion abstractQuestion) {
+        return new Question()
+                .setChapterId(abstractQuestion.getChapterId())
+                .setDifficultyId(abstractQuestion.getDifficultyId())
+                .setDescription(abstractQuestion.getQuestionDescription())
+                .setModifyStudentId(abstractQuestion.getStudentId())
+                .setModifyUserId(abstractQuestion.getTeacherId())
+                .setTypeId(abstractQuestion.getTypeId());
+    }
+
+    public static Answer getAnswerByDetail(AbstractQuestion abstractQuestion) {
+        return new Answer()
+                .setContent(abstractQuestion.getAnswer())
+                .setQuestionId(abstractQuestion.getQuestionId());
+    }
 
     @ApiOperation("检索题库")
     @GetMapping("/page")
@@ -126,28 +151,9 @@ public class QuestionController {
         return questionService.removeById(id);
     }
 
-    private static AbstractQuestion fillQuestion(AbstractQuestion q, Question question) {
-        q.setQuestionId(question.getId())
-                .setQuestionDescription(question.getDescription())
-                .setChapterId(question.getChapterId())
-                .setDifficultyId(question.getDifficultyId())
-                .setTypeId(question.getTypeId());
-        return q;
-    }
-
-    public static Question getQuestionByDetail(AbstractQuestion abstractQuestion) {
-        return new Question()
-                .setChapterId(abstractQuestion.getChapterId())
-                .setDifficultyId(abstractQuestion.getDifficultyId())
-                .setDescription(abstractQuestion.getQuestionDescription())
-                .setModifyStudentId(abstractQuestion.getStudentId())
-                .setModifyUserId(abstractQuestion.getTeacherId())
-                .setTypeId(abstractQuestion.getTypeId());
-    }
-
-    public static Answer getAnswerByDetail(AbstractQuestion abstractQuestion) {
-        return new Answer()
-                .setContent(abstractQuestion.getAnswer())
-                .setQuestionId(abstractQuestion.getQuestionId());
+    @GetMapping("/count")
+    @ApiOperation("题目数量")
+    public int count() {
+        return questionService.count();
     }
 }

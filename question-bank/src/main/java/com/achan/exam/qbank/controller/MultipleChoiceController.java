@@ -7,7 +7,7 @@ import com.achan.exam.common.entity.Question;
 import com.achan.exam.common.service.impl.AnswerServiceImpl;
 import com.achan.exam.common.service.impl.MultipleChoiceServiceImpl;
 import com.achan.exam.common.service.impl.QuestionServiceImpl;
-import com.achan.exam.common.vo.question.MultipleChoiceDetail;
+import com.achan.exam.common.dto.question.MultipleChoiceDetail;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

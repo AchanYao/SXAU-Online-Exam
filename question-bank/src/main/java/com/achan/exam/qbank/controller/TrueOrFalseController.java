@@ -7,7 +7,7 @@ import com.achan.exam.common.entity.TOrFQuestion;
 import com.achan.exam.common.service.impl.AnswerServiceImpl;
 import com.achan.exam.common.service.impl.QuestionServiceImpl;
 import com.achan.exam.common.service.impl.TOrFQuestionServiceImpl;
-import com.achan.exam.common.vo.question.TrueOrFalseDetail;
+import com.achan.exam.common.dto.question.TrueOrFalseDetail;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

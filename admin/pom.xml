@@ -39,6 +39,11 @@
         </dependency>
         <dependency>
             <groupId>com.achan.exam</groupId>
+            <artifactId>question-bank</artifactId>
+            <version>${exam.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.achan.exam</groupId>
             <artifactId>auth-client</artifactId>
             <version>${exam.version}</version>
         </dependency>
