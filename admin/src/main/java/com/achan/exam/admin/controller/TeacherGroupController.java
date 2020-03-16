@@ -2,14 +2,13 @@ package com.achan.exam.admin.controller;
 
 import com.achan.exam.admin.vo.TeacherGroupDetails;
 import com.achan.exam.common.annotation.BaseResponse;
+import com.achan.exam.common.dto.group.TeacherGroupOverview;
 import com.achan.exam.common.entity.Teacher;
 import com.achan.exam.common.entity.TeacherGroup;
 import com.achan.exam.common.entity.TeacherMidGroup;
-import com.achan.exam.common.exception.ConnectionRelationException;
 import com.achan.exam.common.service.impl.TeacherGroupServiceImpl;
 import com.achan.exam.common.service.impl.TeacherMidGroupServiceImpl;
 import com.achan.exam.common.service.impl.TeacherServiceImpl;
-import com.achan.exam.common.vo.group.TeacherGroupOverview;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -54,7 +53,7 @@ public class TeacherGroupController {
 
     @GetMapping("/one")
     @ApiOperation("跟据课程id查找教师组")
-    public TeacherGroup findGroupByCourseId(@RequestParam int courseId) {
+    public TeacherGroup findGroupByCourseId(@RequestParam(name = "course-id") int courseId) {
         return teacherGroupService.getOne(new QueryWrapper<TeacherGroup>().lambda().eq(TeacherGroup::getCourseId, courseId));
     }
 

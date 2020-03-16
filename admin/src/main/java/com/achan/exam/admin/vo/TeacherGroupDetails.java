@@ -1,12 +1,12 @@
 package com.achan.exam.admin.vo;
 
+import com.achan.exam.common.dto.group.TeacherGroupOverview;
 import com.achan.exam.common.entity.Teacher;
-import com.achan.exam.common.entity.TeacherGroup;
-import com.achan.exam.common.vo.group.TeacherGroupOverview;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -17,6 +17,8 @@ import java.util.List;
 @Accessors(chain = true)
 @ApiModel(value = "教师组详细信息封装")
 public class TeacherGroupDetails {
+    @NotNull
     private TeacherGroupOverview teacherGroupOverview;
+    @NotNull
     private List<Teacher> teachers;
 }

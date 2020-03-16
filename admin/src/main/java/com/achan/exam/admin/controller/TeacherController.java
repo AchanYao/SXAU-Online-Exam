@@ -1,8 +1,8 @@
 package com.achan.exam.admin.controller;
 
 import com.achan.exam.common.annotation.BaseResponse;
+import com.achan.exam.common.dto.teacher.TeacherDetails;
 import com.achan.exam.common.entity.Teacher;
-import com.achan.exam.common.entity.TeacherGroup;
 import com.achan.exam.common.entity.TeacherMidGroup;
 import com.achan.exam.common.service.impl.TeacherGroupServiceImpl;
 import com.achan.exam.common.service.impl.TeacherMidGroupServiceImpl;
@@ -39,11 +39,11 @@ public class TeacherController {
 
     @GetMapping("/page")
     @ApiOperation("分页查询教师")
-    public Page<Teacher> page(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String keyword) {
+    public Page<TeacherDetails> page(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String keyword) {
         if (keyword != null && !keyword.isBlank()) {
-            return teacherService.page(new Page<>(page, size), new QueryWrapper<Teacher>().lambda().like(Teacher::getNumber, keyword).or().like(Teacher::getName, keyword));
+            return teacherService.getTeacherWithDetailsByKeyword(new Page<>(page, size), keyword);
         } else {
-            return teacherService.page(new Page<>(page, size));
+            return teacherService.getTeacherWithDetails(new Page<>(page, size));
         }
     }
 
@@ -54,7 +54,7 @@ public class TeacherController {
         teacherMidGroupService.list(new QueryWrapper<TeacherMidGroup>()
                 .lambda()
                 .eq(TeacherMidGroup::getTeacherGroupId, groupId)).forEach(teacherMidGroup -> {
-                    teachers.add(teacherService.getById(teacherMidGroup.getTeacherId()));
+            teachers.add(teacherService.getById(teacherMidGroup.getTeacherId()));
         });
         return teachers;
     }

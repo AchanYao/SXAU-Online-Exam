@@ -6,6 +6,7 @@ import com.achan.exam.common.entity.Clazz;
 import com.achan.exam.common.service.impl.ClazzServiceImpl;
 import com.achan.exam.util.file.FileUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,16 @@ public class ClazzController {
     @ApiOperation("所有班级")
     public List<Clazz> all() {
         return clazzService.list();
+    }
+
+    @GetMapping("/page")
+    @ApiOperation("分页获取班级")
+    public Page<Clazz> page(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return clazzService.page(new Page<>(page, size));
+        } else {
+            return clazzService.page(new Page<>(page, size), new QueryWrapper<Clazz>().lambda().like(Clazz::getName, keyword));
+        }
     }
 
     @GetMapping("/{id}")

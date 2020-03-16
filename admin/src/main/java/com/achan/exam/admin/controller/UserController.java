@@ -2,15 +2,20 @@ package com.achan.exam.admin.controller;
 
 import com.achan.exam.admin.task.ImportStudentTask;
 import com.achan.exam.admin.task.ImportTeacherTask;
-import com.achan.exam.admin.vo.UserStudent;
-import com.achan.exam.admin.vo.UserTeacher;
 import com.achan.exam.common.annotation.BaseResponse;
-import com.achan.exam.common.entity.*;
+import com.achan.exam.common.entity.Student;
+import com.achan.exam.common.entity.Teacher;
+import com.achan.exam.common.entity.User;
+import com.achan.exam.common.entity.UserRole;
+import com.achan.exam.common.exception.ExamException;
 import com.achan.exam.common.exception.InsertUserException;
-import com.achan.exam.common.service.impl.*;
+import com.achan.exam.common.service.impl.StudentServiceImpl;
+import com.achan.exam.common.service.impl.TeacherServiceImpl;
+import com.achan.exam.common.service.impl.UserRoleServiceImpl;
+import com.achan.exam.common.service.impl.UserServiceImpl;
+import com.achan.exam.common.vo.ResultCodeEnum;
 import com.achan.exam.common.vo.enumerate.RoleEnum;
 import com.achan.exam.util.file.FileUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -58,31 +63,41 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/classes/{classId}/students/add")
+    @PostMapping("/students/add")
     @ApiOperation("向指定班级添加学生")
-    public boolean addStudent(@PathVariable int classId, @RequestBody @Validated UserStudent student) {
-        User user = student.getUser().setPassword(passwordEncoder.encode(student.getUser().getUsername()));
-        boolean result = true;
-        result = result && userService.save(user);
-        user = userService.getOne(new QueryWrapper<User>().lambda().eq(User::getUsername, user.getUsername()));
+    public Student addStudent(@RequestBody @Validated Student student) {
+        User user = new User().setUsername(student.getNumber()).setPassword(passwordEncoder.encode(student.getNumber()));
+        boolean result;
+        result = userService.save(user);
         result = result && userRoleService.save(new UserRole().setUserId(user.getId()).setRoleId(RoleEnum.STUDENT.getId()));
-        result = result && studentService.save(student.getStudent().setUserId(user.getId()).setClazzId(classId));
-        return result;
+        result = result && studentService.save(student.setUserId(user.getId()).setClazzId(student.getClazzId()));
+        if (!result) {
+            throw new ExamException(ResultCodeEnum.DATA_SAVE_ERROR);
+        }
+        return student;
+    }
+
+    @PutMapping("/change-status/{id}")
+    public boolean changeStatus(@PathVariable int id) {
+        User user = userService.getById(id);
+        user.setEnable(user.getEnable() == 1 ? 0 : 1);
+        return userService.updateById(user);
     }
 
     @PostMapping("/teachers/add")
     @ApiOperation("添加教师")
-    public boolean addTeacher(@RequestBody @Validated UserTeacher teacher) {
-        User user = teacher.getUser().setPassword(passwordEncoder.encode(teacher.getUser().getUsername()));
-        boolean result = true;
-        result = result && userService.save(user);
+    public Teacher addTeacher(@RequestBody @Validated Teacher teacher) {
+        User user = new User().setUsername(teacher.getNumber()).setPassword(passwordEncoder.encode(teacher.getNumber()));
+        boolean result = userService.save(user);
         if (!result) {
             throw new InsertUserException();
         }
-        user = userService.getOne(new QueryWrapper<User>().lambda().eq(User::getUsername, user.getUsername()));
-        result = result && userRoleService.save(new UserRole().setUserId(user.getId()).setRoleId(RoleEnum.TEACHER.getId()));
-        result = result && teacherService.save(teacher.getTeacher().setUserId(user.getId()));
-        return result;
+        result = userRoleService.save(new UserRole().setUserId(user.getId()).setRoleId(RoleEnum.TEACHER.getId()));
+        result = result && teacherService.save(teacher.setUserId(user.getId()));
+        if (!result) {
+            throw new InsertUserException();
+        }
+        return teacher;
     }
 
     @DeleteMapping("/students/delete/{id}")
@@ -105,7 +120,7 @@ public class UserController {
         return studentService.updateById(student);
     }
 
-    @DeleteMapping("/teachers/update")
+    @PutMapping("/teachers/update")
     @ApiOperation("修改教师信息")
     public boolean updateTeacher(@RequestBody Teacher teacher) {
         return teacherService.updateById(teacher);

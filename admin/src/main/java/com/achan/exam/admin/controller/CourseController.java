@@ -52,14 +52,16 @@ public class CourseController {
 
     @PostMapping("/add")
     @ApiOperation("增加课程")
-    public boolean addCourse(@RequestBody Course course) {
-        return courseService.save(course);
+    public Course addCourse(@RequestBody Course course) {
+        courseService.save(course);
+        return course;
     }
 
     @PutMapping("/update")
     @ApiOperation("修改课程")
-    public boolean updateCourse(@RequestBody Course course) {
-        return courseService.updateById(course);
+    public Course updateCourse(@RequestBody Course course) {
+        courseService.updateById(course);
+        return course;
     }
 
     @DeleteMapping("/delete/{id}")

@@ -1,10 +1,9 @@
 package com.achan.exam.admin.controller;
 
 import com.achan.exam.common.annotation.BaseResponse;
+import com.achan.exam.common.dto.student.StudentDetails;
 import com.achan.exam.common.entity.Student;
 import com.achan.exam.common.service.impl.StudentServiceImpl;
-import com.achan.exam.common.util.ApplicationContextUtil;
-import com.achan.exam.common.vo.student.StudentDetails;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -51,7 +50,7 @@ public class StudentController {
         return students;
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     @ApiOperation("修改学生信息")
     public boolean addStudent(@RequestBody Student student) {
         return studentService.updateById(student);
