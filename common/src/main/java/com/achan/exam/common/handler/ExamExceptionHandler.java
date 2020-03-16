@@ -5,6 +5,7 @@ import com.achan.exam.common.exception.ExamException;
 import com.achan.exam.common.vo.R;
 import com.achan.exam.common.vo.ResultCodeEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +36,12 @@ public class ExamExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public R handleRuntimeException(RuntimeException e) {
         log.error(e.getMessage(), e);
+        return R.setResult(ResultCodeEnum.UNKNOWN_REASON).message(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidGrantException.class)
+    public R handleInvalidGrantException(InvalidGrantException e) {
+        log.warn(e.getMessage(), e);
         return R.setResult(ResultCodeEnum.UNKNOWN_REASON).message(e.getMessage());
     }
 

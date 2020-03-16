@@ -1,4 +1,4 @@
-package com.achan.exam.common.vo.question;
+package com.achan.exam.common.dto.question;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,5 +9,5 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SubjectiveQuestionDetail extends AbstractQuestion {
+public class TrueOrFalseDetail extends AbstractQuestion {
 }

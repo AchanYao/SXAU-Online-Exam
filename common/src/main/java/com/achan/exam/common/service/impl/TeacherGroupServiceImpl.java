@@ -1,5 +1,6 @@
 package com.achan.exam.common.service.impl;
 
+import com.achan.exam.common.dto.group.TeacherGroupOverview;
 import com.achan.exam.common.entity.Teacher;
 import com.achan.exam.common.entity.TeacherGroup;
 import com.achan.exam.common.entity.TeacherMidGroup;
@@ -7,9 +8,7 @@ import com.achan.exam.common.exception.ConnectionRelationException;
 import com.achan.exam.common.exception.DataSaveException;
 import com.achan.exam.common.mapper.TeacherGroupMapper;
 import com.achan.exam.common.mapper.TeacherMapper;
-import com.achan.exam.common.mapper.TeacherMidGroupMapper;
 import com.achan.exam.common.service.ITeacherGroupService;
-import com.achan.exam.common.vo.group.TeacherGroupOverview;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,8 +36,6 @@ public class TeacherGroupServiceImpl extends ServiceImpl<TeacherGroupMapper, Tea
 
     @Autowired
     private TeacherMapper teacherMapper;
-    @Autowired
-    private TeacherMidGroupMapper teacherMidGroupMapper;
 
     public TeacherGroupOverview teacherGroupOverview(Integer id) {
         return this.baseMapper.details(id);
@@ -69,9 +66,7 @@ public class TeacherGroupServiceImpl extends ServiceImpl<TeacherGroupMapper, Tea
         );
         List<TeacherMidGroup> groupList = new ArrayList<>(teachers.size());
         final Integer teacherGroupId = teacherGroup.getId();
-        teachers.forEach(t -> {
-            groupList.add(new TeacherMidGroup().setTeacherGroupId(teacherGroupId).setTeacherId(t.getId()));
-        });
+        teachers.forEach(t -> groupList.add(new TeacherMidGroup().setTeacherGroupId(teacherGroupId).setTeacherId(t.getId())));
         return this.batchSaveMember(groupList);
     }
 
@@ -81,8 +76,8 @@ public class TeacherGroupServiceImpl extends ServiceImpl<TeacherGroupMapper, Tea
         this.executeBatch((sqlSession) -> {
             int i = 1;
 
-            for(Iterator var6 = entityList.iterator(); var6.hasNext(); ++i) {
-                TeacherMidGroup entity = (TeacherMidGroup) var6.next();
+            for(Iterator<TeacherMidGroup> var6 = entityList.iterator(); var6.hasNext(); ++i) {
+                TeacherMidGroup entity = var6.next();
                 sqlSession.insert(sqlStatement, entity);
                 if (i % entityList.size() == 0 || i == size) {
                     sqlSession.flushStatements();

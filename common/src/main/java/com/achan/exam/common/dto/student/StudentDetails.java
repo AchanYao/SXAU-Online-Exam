@@ -1,4 +1,4 @@
-package com.achan.exam.common.vo.student;
+package com.achan.exam.common.dto.student;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -50,4 +50,7 @@ public class StudentDetails {
 
     @ApiModelProperty(value = "班级名")
     private String clazzName;
+
+    @ApiModelProperty(value = "是否启用")
+    private String enable;
 }

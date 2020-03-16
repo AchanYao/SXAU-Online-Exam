@@ -1,10 +1,9 @@
 package com.achan.exam.common.service.impl;
 
+import com.achan.exam.common.dto.student.StudentDetails;
 import com.achan.exam.common.entity.Student;
 import com.achan.exam.common.mapper.StudentMapper;
 import com.achan.exam.common.service.IStudentService;
-import com.achan.exam.common.vo.student.StudentDetails;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

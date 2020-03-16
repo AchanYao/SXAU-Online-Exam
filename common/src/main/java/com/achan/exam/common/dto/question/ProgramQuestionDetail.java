@@ -1,4 +1,4 @@
-package com.achan.exam.common.vo.question;
+package com.achan.exam.common.dto.question;
 
 import com.achan.exam.common.entity.ProgramInput;
 import lombok.Data;

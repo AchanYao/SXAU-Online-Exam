@@ -1,7 +1,7 @@
 package com.achan.exam.common.mapper;
 
+import com.achan.exam.common.dto.group.TeacherGroupOverview;
 import com.achan.exam.common.entity.TeacherGroup;
-import com.achan.exam.common.vo.group.TeacherGroupOverview;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Select;

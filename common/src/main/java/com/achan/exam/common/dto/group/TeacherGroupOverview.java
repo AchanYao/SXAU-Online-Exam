@@ -1,11 +1,5 @@
-package com.achan.exam.common.vo.group;
+package com.achan.exam.common.dto.group;
 
-import com.achan.exam.common.entity.Course;
-import com.achan.exam.common.entity.Teacher;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
