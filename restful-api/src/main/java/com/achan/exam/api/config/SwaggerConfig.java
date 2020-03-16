@@ -24,7 +24,7 @@ public class SwaggerConfig {
                 .groupName("admin")
                 .apiInfo(adminApiInfo("管理端"))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.admin"))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -35,7 +35,7 @@ public class SwaggerConfig {
                 .groupName("question-bank")
                 .apiInfo(adminApiInfo("题库"))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.qbank"))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -57,7 +57,7 @@ public class SwaggerConfig {
                 .groupName("auth-client")
                 .apiInfo(adminApiInfo("oauth2资源服务器"))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.auth.client"))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
     }
