@@ -1,0 +1,20 @@
+* {
+  -ms-overflow-style:none;
+  overflow:-moz-scrollbars-none
+}
+
+::-webkit-scrollbar {
+  display: none
+}
+
+.scroll-overflow {
+  overflow: auto;
+}
+
+.scroll-overflow-x {
+  overflow-x: auto;
+}
+
+.scroll-overflow-y {
+  overflow-y: auto;
+}
