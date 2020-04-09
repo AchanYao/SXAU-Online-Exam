@@ -4,6 +4,7 @@
 @import './element-ui.scss';
 @import './sidebar.scss';
 @import './btn.scss';
+@import './layout.scss';
 
 body {
   height: 100%;
@@ -55,14 +56,6 @@ a:hover {
 
 div:focus {
   outline: none;
-}
-
-.fr {
-  float: right;
-}
-
-.fl {
-  float: left;
 }
 
 .pr-5 {

@@ -1,0 +1,51 @@
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+@for $i from 1 through 10 {
+  .m-#{$i} {
+    margin: 0.25rem * $i !important;
+  }
+
+  .mr-#{$i} {
+    margin-right: 0.25rem * $i !important;
+  }
+
+  .mb-#{$i} {
+    margin-bottom: 0.25rem * $i !important;
+  }
+
+  .mt-#{$i} {
+    margin-top: 0.25rem * $i !important;
+  }
+
+  .ml-#{$i} {
+    margin-left: 0.25rem * $i !important;
+  }
+}
+
+@for $i from 1 through 10 {
+  .p-#{$i} {
+    padding: 0.25rem * $i !important;
+  }
+
+  .pr-#{$i} {
+    margin-right: 0.25rem * $i !important;
+  }
+
+  .pb-#{$i} {
+    margin-bottom: 0.25rem * $i !important;
+  }
+
+  .pt-#{$i} {
+    margin-top: 0.25rem * $i !important;
+  }
+
+  .pl-#{$i} {
+    margin-left: 0.25rem * $i !important;
+  }
+}
