@@ -60,7 +60,6 @@ public class QuestionController {
 
     public static Answer getAnswerByDetail(AbstractQuestion abstractQuestion) {
         return new Answer()
-                .setContent(abstractQuestion.getAnswer())
                 .setQuestionId(abstractQuestion.getQuestionId());
     }
 
@@ -70,7 +69,8 @@ public class QuestionController {
                                        @RequestParam(required = false, defaultValue = "10") int size,
                                        @RequestParam(required = false) String keyword,
                                        @RequestParam(required = false, name = "t") Integer type,
-                                       @RequestParam(required = false, name = "d") Integer difficult) {
+                                       @RequestParam(required = false, name = "d") Integer difficult,
+                                       @RequestParam(required = false, name = "c") Integer chapter) {
         Page<Question> pageE = new Page<>(page, size);
         LambdaQueryWrapper<Question> questionLambdaQueryWrapper = new LambdaQueryWrapper<>();
         if (difficult != null) {
@@ -81,6 +81,9 @@ public class QuestionController {
         }
         if (keyword != null && !keyword.isBlank()) {
             questionLambdaQueryWrapper = questionLambdaQueryWrapper.like(Question::getDescription, keyword);
+        }
+        if (chapter != null) {
+            questionLambdaQueryWrapper = questionLambdaQueryWrapper.eq(Question::getChapterId, chapter);
         }
         return questionService.page(pageE, questionLambdaQueryWrapper);
     }
@@ -93,8 +96,7 @@ public class QuestionController {
         switch (question.getTypeId()) {
             case 1: {
                 // 单选题
-                MultipleChoiceDetail multipleChoiceDetail = (MultipleChoiceDetail) fillQuestion(new MultipleChoiceDetail(), question)
-                        .setAnswer(answer.getContent());
+                MultipleChoiceDetail multipleChoiceDetail = (MultipleChoiceDetail) fillQuestion(new MultipleChoiceDetail(), question);
                 MultipleChoice multipleChoice = multipleChoiceService.getOne(new QueryWrapper<MultipleChoice>()
                         .lambda().eq(MultipleChoice::getQuestionId, question.getId()));
                 multipleChoiceDetail
@@ -106,8 +108,7 @@ public class QuestionController {
             }
             case 2: {
                 // 填空题
-                FillBlankDetail fillBlankDetail = (FillBlankDetail) fillQuestion(new FillBlankDetail(), question)
-                        .setAnswer(answer.getContent());
+                FillBlankDetail fillBlankDetail = (FillBlankDetail) fillQuestion(new FillBlankDetail(), question);
                 FillBlankQuestion fillBlankQuestion = fillBlankQuestionService.getOne(new QueryWrapper<FillBlankQuestion>()
                         .lambda().eq(FillBlankQuestion::getQuestionId, question.getId()));
                 fillBlankDetail.setBlankCount(fillBlankQuestion.getBlankCount());
@@ -115,18 +116,11 @@ public class QuestionController {
             }
             case 3: {
                 // 判断题
-                TrueOrFalseDetail trueOrFalseDetail = (TrueOrFalseDetail) fillQuestion(new TrueOrFalseDetail(), question)
-                        .setAnswer(answer.getContent());
-                TOrFQuestion tOrFQuestion = tOrFQuestionService.getOne(new QueryWrapper<TOrFQuestion>()
-                        .lambda().eq(TOrFQuestion::getQuestionId, question.getId()));
-                trueOrFalseDetail.setTeacherId(tOrFQuestion.getTeacherId())
-                        .setStudentId(tOrFQuestion.getStudentId());
-                return trueOrFalseDetail;
+                return (TrueOrFalseDetail) fillQuestion(new TrueOrFalseDetail(), question);
             }
             case 4: {
                 // 主观题
-                SubjectiveQuestionDetail subjectiveQuestionDetail = (SubjectiveQuestionDetail) fillQuestion(new SubjectiveQuestionDetail(), question)
-                        .setAnswer(answer.getContent());
+                SubjectiveQuestionDetail subjectiveQuestionDetail = (SubjectiveQuestionDetail) fillQuestion(new SubjectiveQuestionDetail(), question);
                 SubjectiveQuestion subjectiveQuestion = subjectiveQuestionService.getOne(new QueryWrapper<SubjectiveQuestion>()
                         .lambda().eq(SubjectiveQuestion::getQuestionId, question.getId()));
                 subjectiveQuestionDetail.setTeacherId(subjectiveQuestion.getTeacherId())
@@ -135,8 +129,7 @@ public class QuestionController {
             }
             case 5: {
                 // 编程题
-                ProgramQuestionDetail programQuestionDetail = (ProgramQuestionDetail) fillQuestion(new ProgramQuestionDetail(), question)
-                        .setAnswer(answer.getContent());
+                ProgramQuestionDetail programQuestionDetail = (ProgramQuestionDetail) fillQuestion(new ProgramQuestionDetail(), question);
                 ProgramQuestion programQuestion = programQuestionService.getOne(new QueryWrapper<ProgramQuestion>()
                         .lambda().eq(ProgramQuestion::getQuestionId, question.getId()));
                 programQuestionDetail

@@ -43,7 +43,6 @@ public class MultipleChoiceController {
         answerService.save(answer);
         MultipleChoice multipleChoice = new MultipleChoice()
                 .setQuestionId(question.getId())
-                .setAnswerId(answer.getId())
                 .setOptionA(multipleChoiceDetail.getOptionA())
                 .setOptionB(multipleChoiceDetail.getOptionB())
                 .setOptionC(multipleChoiceDetail.getOptionC())

@@ -25,11 +25,6 @@ public abstract class AbstractQuestion {
     @NotBlank
     protected String questionDescription;
 
-    @ApiModelProperty(value = "参考答案")
-    @NotNull
-    @NotBlank
-    protected String answer;
-
     @ApiModelProperty(value = "提供该题的学生id")
     protected Integer studentId;
 

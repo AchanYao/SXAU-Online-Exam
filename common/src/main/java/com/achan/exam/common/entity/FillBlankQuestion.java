@@ -41,12 +41,6 @@ public class FillBlankQuestion implements Serializable {
     @ApiModelProperty(value = "题目id")
     private Integer questionId;
 
-    @ApiModelProperty(value = "参考答案")
-    private Integer answerId;
-
-    @ApiModelProperty(value = "题目描述")
-    private String description;
-
     @ApiModelProperty(value = "本题应填答案个数")
     private Integer blankCount;
 

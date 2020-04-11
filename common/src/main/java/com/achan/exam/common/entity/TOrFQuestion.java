@@ -40,12 +40,4 @@ public class TOrFQuestion implements Serializable {
     @ApiModelProperty(value = "题目id")
     private Integer questionId;
 
-    @ApiModelProperty(value = "参考答案")
-    private Integer answerId;
-
-    private Integer studentId;
-
-    private Integer teacherId;
-
-
 }

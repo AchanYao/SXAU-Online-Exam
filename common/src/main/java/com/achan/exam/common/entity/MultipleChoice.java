@@ -51,7 +51,4 @@ public class MultipleChoice implements Serializable {
 
     @ApiModelProperty(value = "选项D")
     private String optionD;
-
-    @ApiModelProperty(value = "参考答案")
-    private Integer answerId;
 }

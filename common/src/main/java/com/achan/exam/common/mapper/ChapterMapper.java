@@ -26,6 +26,6 @@ public interface ChapterMapper extends BaseMapper<Chapter> {
      * @param wrapper 条件构造器
      * @return all chapters
      */
-    @Select("SELECT COUNT(1) AS question_count, chapter_id AS id, chapter.`name` AS NAME, chapter.description AS description FROM question LEFT JOIN chapter ON chapter.id = chapter_id ${ew.customSqlSegment}")
+    @Select("SELECT COUNT(1) AS question_count, chapter_id AS id, chapter.`name` AS name, chapter.description AS description FROM question LEFT JOIN chapter ON chapter.id = chapter_id ${ew.customSqlSegment}")
     List<ChapterDTO> listChapters(@Param(Constants.WRAPPER) Wrapper<?> wrapper);
 }

@@ -47,8 +47,7 @@ public class StudentController {
     @GetMapping("/classes/{classId}")
     @ApiOperation("检索指定班级的所有学生")
     public List<Student> getStudentByClazz(@PathVariable int classId) {
-        List<Student> students = studentService.list(new QueryWrapper<Student>().lambda().eq(Student::getClazzId, classId));
-        return students;
+        return studentService.list(new QueryWrapper<Student>().lambda().eq(Student::getClazzId, classId));
     }
 
     @PostMapping("/update")

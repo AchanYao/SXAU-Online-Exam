@@ -43,7 +43,6 @@ public class FillBlankController {
         Answer answer = QuestionController.getAnswerByDetail(fillBlankDetail.setQuestionId(question.getId()));
         answerService.save(answer);
         FillBlankQuestion fillBlankQuestion = new FillBlankQuestion()
-                .setAnswerId(answer.getId())
                 .setQuestionId(question.getId())
                 .setBlankCount(fillBlankDetail.getBlankCount());
         if (!fillBlankQuestionService.save(fillBlankQuestion)) {

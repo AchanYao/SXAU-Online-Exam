@@ -42,10 +42,7 @@ public class TrueOrFalseController {
         Answer answer = QuestionController.getAnswerByDetail(trueOrFalseDetail.setQuestionId(question.getId()));
         answerService.save(answer);
         TOrFQuestion tOrFQuestion = new TOrFQuestion()
-                .setQuestionId(question.getId())
-                .setAnswerId(answer.getId())
-                .setStudentId(trueOrFalseDetail.getStudentId())
-                .setTeacherId(trueOrFalseDetail.getStudentId());
+                .setQuestionId(question.getId());
         return tOrFQuestionService.save(tOrFQuestion);
     }
 
@@ -59,10 +56,7 @@ public class TrueOrFalseController {
         answerService.update(answer, new QueryWrapper<Answer>()
                 .lambda().eq(Answer::getQuestionId, question.getId()));
         TOrFQuestion tOrFQuestion = new TOrFQuestion()
-                .setQuestionId(question.getId())
-                .setAnswerId(answer.getId())
-                .setStudentId(trueOrFalseDetail.getStudentId())
-                .setTeacherId(trueOrFalseDetail.getStudentId());
+                .setQuestionId(question.getId());
         return tOrFQuestionService.update(tOrFQuestion, new QueryWrapper<TOrFQuestion>().lambda().eq(TOrFQuestion::getQuestionId, question.getId()));
     }
 }

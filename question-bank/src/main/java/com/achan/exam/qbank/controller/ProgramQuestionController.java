@@ -50,8 +50,7 @@ public class ProgramQuestionController {
         Answer answer = QuestionController.getAnswerByDetail(programQuestionDetail.setQuestionId(question.getId()));
         answerService.save(answer);
         ProgramQuestion programQuestion = new ProgramQuestion()
-                .setQuestionId(question.getId())
-                .setAnswerId(answer.getId());
+                .setQuestionId(question.getId());
         programQuestionDetail.setQuestionId(question.getId());
         if (!programQuestionService.save(programQuestion)) {
             throw new DataSaveException();

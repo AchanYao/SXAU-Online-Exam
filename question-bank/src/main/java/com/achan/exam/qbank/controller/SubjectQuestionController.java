@@ -45,8 +45,7 @@ public class SubjectQuestionController {
         Answer answer = QuestionController.getAnswerByDetail(subjectiveQuestionDetail.setQuestionId(question.getId()));
         answerService.save(answer);
         SubjectiveQuestion subjectiveQuestion = new SubjectiveQuestion()
-                .setQuestionId(question.getId())
-                .setAnswerId(answer.getId());
+                .setQuestionId(question.getId());
         if (!subjectiveQuestionService.save(subjectiveQuestion)) {
             throw new DataSaveException();
         }
@@ -61,8 +60,7 @@ public class SubjectQuestionController {
         Answer answer = QuestionController.getAnswerByDetail(subjectiveQuestionDetail);
         answerService.update(answer, new QueryWrapper<Answer>().lambda().eq(Answer::getQuestionId, question.getId()));
         SubjectiveQuestion subjectiveQuestion = new SubjectiveQuestion()
-                .setQuestionId(question.getId())
-                .setAnswerId(answer.getId());
+                .setQuestionId(question.getId());
         if (!subjectiveQuestionService.updateById(subjectiveQuestion)) {
             throw new DataSaveException();
         }

@@ -45,4 +45,9 @@ public class ChapterController {
     public boolean delete(@PathVariable Integer id) {
         return chapterService.removeById(id);
     }
+
+    @GetMapping("list/courses/{id}")
+    public List<Chapter> listChaptersByCourse(@PathVariable Integer id) {
+        return chapterService.list(new QueryWrapper<Chapter>().lambda().eq(Chapter::getCourseId, id));
+    }
 }
