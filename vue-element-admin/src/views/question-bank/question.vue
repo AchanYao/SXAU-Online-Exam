@@ -10,7 +10,7 @@
     </list-group>
     <div class="mb-1 h3 cursor-pointer" @click="getAnswer"><svg-icon :icon-class="answer ? 'eye-open' : 'eye'" />答案：</div>
     <div v-if="answer && question.typeId === 3" class="answer-container">
-      <i :class="answer.content === 'T' ? 'el-icon-check' : 'el-icon-close'" />
+      <i :class="answer.content.indexOf('T') !== -1 ? 'el-icon-check' : 'el-icon-close'" />
     </div>
     <div v-else-if="answer" class="answer-container">
       <tinymce v-model="answer.content" :height="400" />
