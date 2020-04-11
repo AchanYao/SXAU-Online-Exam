@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/students")
 @Api("学生增删改查")
 @BaseResponse
+@PreAuthorize("hasRole('admin')")
 public class StudentController {
 
     @Autowired
@@ -39,8 +41,7 @@ public class StudentController {
     @GetMapping("/one/{number}")
     @ApiOperation("检索指定学号学生")
     public Student getStudentByNumber(@PathVariable String number) {
-        Student student = studentService.getOne(new QueryWrapper<Student>().lambda().eq(Student::getNumber, number));
-        return student;
+        return studentService.getOne(new QueryWrapper<Student>().lambda().eq(Student::getNumber, number));
     }
 
     @GetMapping("/classes/{classId}")

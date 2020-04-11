@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ import java.util.List;
 @Api("教师组操作")
 @BaseResponse
 @RequestMapping("/api/teacher-groups")
+@PreAuthorize("hasRole('admin')")
 public class TeacherGroupController {
 
     @Autowired
@@ -43,9 +45,7 @@ public class TeacherGroupController {
         List<Teacher> teachers = new ArrayList<>(0);
         teacherMidGroupService.list(new QueryWrapper<TeacherMidGroup>()
                 .lambda()
-                .eq(TeacherMidGroup::getTeacherGroupId, id)).forEach(teacherMidGroup -> {
-            teachers.add(teacherService.getById(teacherMidGroup.getTeacherId()));
-        });
+                .eq(TeacherMidGroup::getTeacherGroupId, id)).forEach(teacherMidGroup -> teachers.add(teacherService.getById(teacherMidGroup.getTeacherId())));
         return new TeacherGroupDetails()
                 .setTeacherGroupOverview(teacherGroupService.teacherGroupOverview(id))
                 .setTeachers(teachers);
@@ -77,9 +77,7 @@ public class TeacherGroupController {
         List<Teacher> teachers = teacherGroupDetails.getTeachers();
         List<TeacherMidGroup> teacherMidGroupList = new ArrayList<>(teachers.size());
         teacherMidGroupService.remove(new QueryWrapper<TeacherMidGroup>().lambda().eq(TeacherMidGroup::getTeacherGroupId, teacherGroup.getId()));
-        teachers.forEach(teacher -> {
-            teacherMidGroupList.add(new TeacherMidGroup().setTeacherId(teacher.getId()).setTeacherGroupId(teacherGroup.getId()));
-        });
+        teachers.forEach(teacher -> teacherMidGroupList.add(new TeacherMidGroup().setTeacherId(teacher.getId()).setTeacherGroupId(teacherGroup.getId())));
         return teacherGroupService.updateById(teacherGroup) && teacherMidGroupService.saveBatch(teacherMidGroupList, teacherMidGroupList.size());
     }
 

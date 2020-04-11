@@ -5,6 +5,7 @@ import com.achan.exam.common.service.impl.ClazzServiceImpl;
 import com.achan.exam.common.task.ImportDataTask;
 import com.achan.exam.common.util.ApplicationContextUtil;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
  * @author Achan
  * @date 2020/1/17
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
 @Component
@@ -51,7 +53,7 @@ public class ImportClazzTask extends QuartzJobBean implements ImportDataTask<Cla
     }
 
     @Override
-    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    protected void executeInternal(JobExecutionContext jobExecutionContext) {
         importData();
     }
 }

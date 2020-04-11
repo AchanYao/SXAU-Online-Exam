@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -46,6 +47,7 @@ import java.util.stream.Stream;
 @BaseResponse
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
+@PreAuthorize("hasRole('admin')")
 public class UserController {
 
     @Autowired

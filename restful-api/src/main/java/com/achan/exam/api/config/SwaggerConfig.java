@@ -19,12 +19,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
+    public Docket allApiConfig() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("all")
+                .apiInfo(adminApiInfo("All"))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
     public Docket adminApiConfig() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("admin")
                 .apiInfo(adminApiInfo("管理端"))
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.admin"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -35,7 +46,7 @@ public class SwaggerConfig {
                 .groupName("question-bank")
                 .apiInfo(adminApiInfo("题库"))
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.qbank"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -52,12 +63,23 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public Docket chapter() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("chapter")
+                .apiInfo(adminApiInfo("章节"))
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.chapter"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
     public Docket authClient() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("auth-client")
                 .apiInfo(adminApiInfo("oauth2资源服务器"))
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.achan.exam.auth.client"))
                 .paths(PathSelectors.any())
                 .build();
     }

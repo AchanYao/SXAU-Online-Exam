@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
@@ -25,6 +26,7 @@ import java.util.List;
 @Slf4j
 @Api("课程操作")
 @RequestMapping("/api/courses")
+@PreAuthorize("hasRole('admin')")
 public class CourseController {
 
     @Autowired
@@ -48,6 +50,12 @@ public class CourseController {
                             .like(Course::getNumber, keyword)
             );
         }
+    }
+
+    @GetMapping("all")
+    @ApiOperation("所有课程")
+    public List<Course> allCourses() {
+        return courseService.list();
     }
 
     @PostMapping("/add")

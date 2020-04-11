@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ import java.util.List;
 @RequestMapping("/api/teachers")
 @Api(value = "教师操作")
 @BaseResponse
+@PreAuthorize("hasRole('admin')")
 public class TeacherController {
 
     @Autowired
@@ -53,9 +55,7 @@ public class TeacherController {
         List<Teacher> teachers = new ArrayList<>(0);
         teacherMidGroupService.list(new QueryWrapper<TeacherMidGroup>()
                 .lambda()
-                .eq(TeacherMidGroup::getTeacherGroupId, groupId)).forEach(teacherMidGroup -> {
-            teachers.add(teacherService.getById(teacherMidGroup.getTeacherId()));
-        });
+                .eq(TeacherMidGroup::getTeacherGroupId, groupId)).forEach(teacherMidGroup -> teachers.add(teacherService.getById(teacherMidGroup.getTeacherId())));
         return teachers;
     }
 

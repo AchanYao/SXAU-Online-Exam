@@ -40,10 +40,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // 通过Secured注解配置权限，url权限设置为全通过
         http.authorizeRequests()
-                .antMatchers("/auth/**")
-                .permitAll()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .csrf()
                 .disable();
