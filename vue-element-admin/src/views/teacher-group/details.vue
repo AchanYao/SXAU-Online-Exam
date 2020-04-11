@@ -111,6 +111,12 @@ export default {
             name: this.teacherGroupForm.teacherGroupOverview.courseName,
             nameZh: this.teacherGroupForm.teacherGroupOverview.courseNameZh
           }]
+        }).catch(() => {
+          this.$store.dispatch('tagsView/delView', this.$store.state.tagsView.visitedViews.find((value) => {
+            return value.path === this.$route.path
+          })).then(() => {
+            this.$router.push('/')
+          })
         })
       } else {
         // 不存在为创建

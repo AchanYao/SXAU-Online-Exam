@@ -92,7 +92,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
-        meta: { title: '文档', icon: 'documentation' }
+        meta: { title: '文档', icon: 'documentation', roles: ['developer', 'admin'] }
       }
     ]
   },
@@ -105,7 +105,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/guide/index'),
         name: 'Guide',
-        meta: { title: '引导页', icon: 'guide', noCache: true }
+        meta: { title: '引导页', icon: 'guide', noCache: true, roles: ['developer'] }
       }
     ]
   },
@@ -180,7 +180,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/icons/index'),
         name: 'Icons',
-        meta: { title: '图标', icon: 'icon', noCache: true }
+        meta: { title: '图标', icon: 'icon', noCache: true, roles: ['developer'] }
       }
     ]
   },
@@ -199,7 +199,8 @@ export const asyncRoutes = [
     name: 'TeacherGroup',
     meta: {
       title: '课程组管理',
-      icon: 'el-icon-s-management'
+      icon: 'el-icon-s-management',
+      roles: ['admin']
     },
     children: [
       {
@@ -209,10 +210,49 @@ export const asyncRoutes = [
         meta: { title: '课程组' }
       },
       {
-        path: 'details/:id',
+        path: 'details/:id(\\d+)',
         component: () => import('@/views/teacher-group/details'),
         name: 'TeacherGroupDetails',
         meta: { title: '编辑课程组' }
+      }
+    ]
+  },
+  {
+    path: '/questions',
+    component: Layout,
+    name: 'Questions',
+    meta: {
+      title: '题库管理',
+      icon: 'el-icon-question',
+      roles: ['developer', 'admin', 'teacher']
+    },
+    children: [
+      {
+        path: 'all',
+        component: () => import('@/views/question-bank/all'),
+        name: 'AllQuestions',
+        meta: { title: '所有题目' }
+      },
+      {
+        path: 'course/:id(\\d+)',
+        component: () => import('@/views/question-bank/courses'),
+        name: 'CourseChapters',
+        meta: { title: '课程' },
+        hidden: true
+      },
+      {
+        path: 'chapter/:id(\\d+)',
+        component: () => import('@/views/question-bank/chapter'),
+        name: 'ChapterQuestions',
+        meta: { title: '所有题目' },
+        hidden: true
+      },
+      {
+        path: ':id(\\d+)',
+        component: () => import('@/views/question-bank/question'),
+        name: 'QuestionDetails',
+        meta: { title: '问题详情' },
+        hidden: true
       }
     ]
   },

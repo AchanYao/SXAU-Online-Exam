@@ -116,7 +116,7 @@ export default {
       const _this = this
       window.tinymce.init({
         selector: `#${this.tinymceId}`,
-        language: this.languageTypeList['en'],
+        language: this.languageTypeList['zh'],
         height: this.height,
         body_class: 'panel-body ',
         object_resizing: false,
@@ -209,7 +209,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .tinymce-container {
   position: relative;
   line-height: normal;
@@ -233,5 +233,8 @@ export default {
 }
 .editor-upload-btn {
   display: inline-block;
+}
+.mce-flow-layout {
+  overflow-x: auto;
 }
 </style>

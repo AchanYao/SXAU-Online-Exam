@@ -9,7 +9,8 @@ const nestedRouter = {
   name: 'Nested',
   meta: {
     title: '嵌套路由',
-    icon: 'nested'
+    icon: 'nested',
+    roles: ['developer']
   },
   children: [
     {
