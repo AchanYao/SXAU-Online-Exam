@@ -68,6 +68,7 @@ public class QuestionController {
     @GetMapping("/page")
     public Page<Question> questionPage(@RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "10") int size,
+                                       @RequestParam(required = false) String keyword,
                                        @RequestParam(required = false, name = "t") Integer type,
                                        @RequestParam(required = false, name = "d") Integer difficult) {
         Page<Question> pageE = new Page<>(page, size);
@@ -77,6 +78,9 @@ public class QuestionController {
         }
         if (type != null) {
             questionLambdaQueryWrapper = questionLambdaQueryWrapper.eq(Question::getTypeId, type);
+        }
+        if (keyword != null && !keyword.isBlank()) {
+            questionLambdaQueryWrapper = questionLambdaQueryWrapper.like(Question::getDescription, keyword);
         }
         return questionService.page(pageE, questionLambdaQueryWrapper);
     }

@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @BaseResponse
 @RequestMapping("/api/questions/mc")
 @Api("单选题控制器")
+@PreAuthorize("hasRole('teacher')")
 public class MultipleChoiceController {
 
     @Autowired
@@ -41,6 +43,7 @@ public class MultipleChoiceController {
         answerService.save(answer);
         MultipleChoice multipleChoice = new MultipleChoice()
                 .setQuestionId(question.getId())
+                .setAnswerId(answer.getId())
                 .setOptionA(multipleChoiceDetail.getOptionA())
                 .setOptionB(multipleChoiceDetail.getOptionB())
                 .setOptionC(multipleChoiceDetail.getOptionC())
@@ -56,6 +59,7 @@ public class MultipleChoiceController {
         Answer answer = QuestionController.getAnswerByDetail(multipleChoiceDetail);
         answerService.update(answer, new QueryWrapper<Answer>().lambda().eq(Answer::getQuestionId, question.getId()));
         MultipleChoice multipleChoice = new MultipleChoice()
+                .setQuestionId(question.getId())
                 .setOptionA(multipleChoiceDetail.getOptionA())
                 .setOptionB(multipleChoiceDetail.getOptionB())
                 .setOptionC(multipleChoiceDetail.getOptionC())
