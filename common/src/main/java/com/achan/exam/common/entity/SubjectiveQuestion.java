@@ -47,5 +47,7 @@ public class SubjectiveQuestion implements Serializable {
     @ApiModelProperty(value = "录入教师id")
     private Integer teacherId;
 
+    @ApiModelProperty(value = "参考答案")
+    private Integer answerId;
 
 }

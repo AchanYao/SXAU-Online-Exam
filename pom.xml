@@ -35,6 +35,7 @@
         <module>teachers</module>
         <module>auth-server</module>
         <module>auth-client</module>
+        <module>chapter</module>
     </modules>
 
     <dependencies>

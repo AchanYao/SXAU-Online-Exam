@@ -12,6 +12,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 章节
@@ -38,12 +41,15 @@ public class Chapter implements Serializable {
     private Date createTime;
 
     @ApiModelProperty(value = "章节名")
+    @NotNull
+    @NotBlank
     private String name;
 
     @ApiModelProperty(value = "对该章节知识点的简单概括")
     private String description;
 
     @ApiModelProperty(value = "所属课程id")
+    @NotNull
     private Integer courseId;
 
 
