@@ -42,7 +42,7 @@ import java.util.stream.Stream;
  * @date 2020/1/14
  */
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @Api("用户操作")
 @BaseResponse
 @Slf4j

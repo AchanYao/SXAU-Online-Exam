@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @Api("教师组操作")
 @BaseResponse
-@RequestMapping("/api/teacher-groups")
+@RequestMapping("/teacher-groups")
 @PreAuthorize("hasRole('admin')")
 public class TeacherGroupController {
 

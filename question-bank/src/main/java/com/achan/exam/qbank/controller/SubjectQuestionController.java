@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @BaseResponse
-@RequestMapping("/api/questions/sq")
+@RequestMapping("/questions/sq")
 @Api("主观题控制器")
 @PreAuthorize("hasRole('teacher')")
 public class SubjectQuestionController {

@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @BaseResponse
 @Api("章节Controller")
-@RequestMapping("/api/chapters")
+@RequestMapping("/chapters")
 public class ChapterController {
 
     @Autowired

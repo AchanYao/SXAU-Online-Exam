@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @BaseResponse
-@RequestMapping("/api/questions/fb")
+@RequestMapping("/questions/fb")
 @Api("填空题控制器")
 @PreAuthorize("hasRole('teacher')")
 public class FillBlankController {

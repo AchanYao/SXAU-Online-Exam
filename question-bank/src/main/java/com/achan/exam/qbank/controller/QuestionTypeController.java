@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @BaseResponse
 @Api("题目类型")
-@RequestMapping("/api/question-type")
+@RequestMapping("/question-type")
 public class QuestionTypeController {
 
     @GetMapping("/list")

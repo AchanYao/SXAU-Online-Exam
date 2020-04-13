@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("答案控制器")
 @RestController
 @BaseResponse
-@RequestMapping("/api/answers")
+@RequestMapping("/answers")
 public class AnswerController {
 
     @Autowired

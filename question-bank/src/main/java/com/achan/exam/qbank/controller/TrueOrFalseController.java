@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2020/3/6
  */
 @RestController
-@RequestMapping("/api/questions/tof")
+@RequestMapping("/questions/tof")
 @BaseResponse
 @Api("判断题控制器")
 @PreAuthorize("hasRole('teacher')")

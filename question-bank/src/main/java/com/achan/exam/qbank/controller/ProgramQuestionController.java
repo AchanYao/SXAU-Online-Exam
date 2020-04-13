@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @BaseResponse
-@RequestMapping("/api/questions/pq")
+@RequestMapping("/questions/pq")
 @Api("编程题控制器")
 @PreAuthorize("hasRole('teacher')")
 public class ProgramQuestionController {

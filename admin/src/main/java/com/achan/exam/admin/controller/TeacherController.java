@@ -26,7 +26,7 @@ import java.util.List;
  * @date 2020/1/15
  */
 @RestController
-@RequestMapping("/api/teachers")
+@RequestMapping("/teachers")
 @Api(value = "教师操作")
 @BaseResponse
 @PreAuthorize("hasRole('admin')")

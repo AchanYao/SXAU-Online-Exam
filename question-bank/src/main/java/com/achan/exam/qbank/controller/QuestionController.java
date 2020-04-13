@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Achan
  * @date 2020/1/29
  */
-@RequestMapping("/api/questions")
+@RequestMapping("/questions")
 @RestController
 @BaseResponse
 @Api("题库控制器")

@@ -11,7 +11,7 @@
  Target Server Version : 100312
  File Encoding         : 65001
 
- Date: 11/04/2020 23:18:08
+ Date: 13/04/2020 12:20:28
 */
 
 SET NAMES utf8mb4;
@@ -23,8 +23,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL,
-  `modify_time` datetime(0) NOT NULL,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `question_id` int(11) NOT NULL COMMENT '问题id',
   `content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '答案内容',
   PRIMARY KEY (`id`) USING BTREE,
@@ -46,8 +46,8 @@ INSERT INTO `answer` VALUES (5, '2020-01-29 13:37:48', '2020-01-29 13:37:52', 4,
 DROP TABLE IF EXISTS `chapter`;
 CREATE TABLE `chapter`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '章节名',
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '对该章节知识点的简单概括',
   `course_id` int(11) NOT NULL COMMENT '所属课程id',
@@ -79,8 +79,8 @@ INSERT INTO `chapter` VALUES (13, '2020-01-29 12:40:54', '2020-01-29 12:40:58', 
 DROP TABLE IF EXISTS `classroom`;
 CREATE TABLE `classroom`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '教室名',
   `volume` int(10) NOT NULL DEFAULT 0 COMMENT '教室容量',
   PRIMARY KEY (`id`) USING BTREE
@@ -96,8 +96,8 @@ CREATE TABLE `classroom`  (
 DROP TABLE IF EXISTS `clazz`;
 CREATE TABLE `clazz`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '班级表' ROW_FORMAT = Dynamic;
@@ -115,8 +115,8 @@ INSERT INTO `clazz` VALUES (5, '2020-01-19 18:07:17', '2020-01-19 18:07:20', '�
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '课程名（英文）',
   `name_zh` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '课程名',
   `number` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '课程编号',
@@ -139,8 +139,8 @@ INSERT INTO `course` VALUES (7, '2020-03-14 16:14:17', '2020-03-14 16:14:17', 't
 DROP TABLE IF EXISTS `exam`;
 CREATE TABLE `exam`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `clazz_id` int(11) NOT NULL COMMENT '班级id',
   `course_id` int(11) NOT NULL COMMENT '课程id',
   `start_time` datetime(0) NOT NULL COMMENT '开始时间',
@@ -158,8 +158,8 @@ CREATE TABLE `exam`  (
 DROP TABLE IF EXISTS `exam_mid`;
 CREATE TABLE `exam_mid`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `classroom_id` int(11) NOT NULL COMMENT '考试所用教室',
   `exam_id` int(11) NOT NULL COMMENT '考试id',
   PRIMARY KEY (`id`) USING BTREE
@@ -175,8 +175,8 @@ CREATE TABLE `exam_mid`  (
 DROP TABLE IF EXISTS `fill_blank_question`;
 CREATE TABLE `fill_blank_question`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `question_id` int(11) NOT NULL COMMENT '题目id',
   `blank_count` int(3) NOT NULL COMMENT '本题应填答案个数',
   PRIMARY KEY (`id`) USING BTREE,
@@ -196,8 +196,8 @@ DROP TABLE IF EXISTS `multiple_choice`;
 CREATE TABLE `multiple_choice`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question_id` int(11) NOT NULL,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `option_a` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '选项A',
   `option_b` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '选项B',
   `option_c` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '选项C',
@@ -218,8 +218,8 @@ INSERT INTO `multiple_choice` VALUES (1, 1, '2020-01-29 12:58:23', '2020-01-29 1
 DROP TABLE IF EXISTS `program_input`;
 CREATE TABLE `program_input`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `program_id` int(11) NOT NULL COMMENT '编程题id',
   `input` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '样例输入',
   `output` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '样例输出',
@@ -239,8 +239,8 @@ INSERT INTO `program_input` VALUES (1, '2020-01-29 13:35:54', '2020-01-29 13:35:
 DROP TABLE IF EXISTS `program_question`;
 CREATE TABLE `program_question`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `question_id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `question_id`(`question_id`) USING BTREE,
@@ -258,8 +258,8 @@ INSERT INTO `program_question` VALUES (1, '2020-01-29 13:36:16', '2020-01-29 13:
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `type_id` int(11) NOT NULL COMMENT '类型id',
   `chapter_id` int(11) NOT NULL COMMENT '对应章节id',
   `description` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题目简介',
@@ -342,8 +342,8 @@ INSERT INTO `role` VALUES (4, 'ROLE_admin', '管理员');
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `number` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '学号',
   `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学生姓名',
   `id_number` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '身份证号',
@@ -377,8 +377,8 @@ INSERT INTO `student` VALUES (10, '2020-01-22 10:25:00', '2020-01-22 10:25:00', 
 DROP TABLE IF EXISTS `student_answer`;
 CREATE TABLE `student_answer`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NULL DEFAULT NULL,
   `student_id` int(11) NOT NULL COMMENT '学生id',
   `question_id` int(11) NOT NULL COMMENT '问题id',
   `score` int(10) NOT NULL DEFAULT -1 COMMENT '本题得分',
@@ -398,8 +398,8 @@ CREATE TABLE `student_answer`  (
 DROP TABLE IF EXISTS `subjective_question`;
 CREATE TABLE `subjective_question`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `question_id` int(11) NOT NULL COMMENT '题目id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `question_id`(`question_id`) USING BTREE,
@@ -416,8 +416,8 @@ CREATE TABLE `subjective_question`  (
 DROP TABLE IF EXISTS `t_or_f_question`;
 CREATE TABLE `t_or_f_question`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `question_id` int(11) NOT NULL COMMENT '题目id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `question_id`(`question_id`) USING BTREE,
@@ -435,8 +435,8 @@ INSERT INTO `t_or_f_question` VALUES (1, '2020-01-29 13:27:38', '2020-01-29 13:2
 DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE `teacher`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `number` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '教师号',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '教师姓名',
   `user_id` int(11) NOT NULL COMMENT '用户id',
@@ -462,8 +462,8 @@ INSERT INTO `teacher` VALUES (7, '2020-01-20 15:49:34', '2020-01-20 15:49:34', '
 DROP TABLE IF EXISTS `teacher_group`;
 CREATE TABLE `teacher_group`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `number` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '教师组编号',
   `principal_id` int(11) NULL DEFAULT NULL COMMENT '负责教师id',
   `course_id` int(11) NOT NULL COMMENT '负责课程id',
@@ -486,8 +486,8 @@ INSERT INTO `teacher_group` VALUES (2, '2020-01-27 18:17:05', '2020-01-27 18:17:
 DROP TABLE IF EXISTS `teacher_mid_group`;
 CREATE TABLE `teacher_mid_group`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `teacher_id` int(11) NOT NULL COMMENT '教师id',
   `teacher_group_id` int(11) NOT NULL COMMENT '教师组id',
   PRIMARY KEY (`id`) USING BTREE,
@@ -514,8 +514,8 @@ INSERT INTO `teacher_mid_group` VALUES (11, '2020-03-16 15:19:33', '2020-03-16 1
 DROP TABLE IF EXISTS `test_paper`;
 CREATE TABLE `test_paper`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `exam_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
   `question_score` int(10) NOT NULL COMMENT '本题满分',
@@ -534,8 +534,8 @@ CREATE TABLE `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
   `password` varchar(70) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `modify_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   `enable` int(1) NOT NULL DEFAULT 1 COMMENT '0未激活，1已激活',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE
@@ -567,8 +567,8 @@ CREATE TABLE `user_role`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `modify_time` datetime(0) NOT NULL,
-  `create_time` datetime(0) NOT NULL,
+  `modify_time` datetime(0) NOT NULL DEFAULT current_timestamp,
+  `create_time` datetime(0) NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

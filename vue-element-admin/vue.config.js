@@ -37,14 +37,6 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/dev-api/auth': {
-        target: 'http://localhost:8090',
-        secure: false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/dev-api/auth': '/auth'
-        }
-      },
       '/dev-api': {
         target:
           'http://localhost:8090/', // 目标代理接口地址

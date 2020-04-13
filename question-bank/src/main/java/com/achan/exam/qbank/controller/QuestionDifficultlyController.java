@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2020/1/29
  */
 @RestController
-@RequestMapping("/api/question-difficulty")
+@RequestMapping("/question-difficulty")
 @BaseResponse
 @ApiOperation("问题难度")
 public class QuestionDifficultlyController {

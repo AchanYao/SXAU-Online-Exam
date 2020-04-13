@@ -19,7 +19,7 @@ import java.util.List;
  * @since 2020/1/14
  */
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/students")
 @Api("学生增删改查")
 @BaseResponse
 @PreAuthorize("hasRole('admin')")

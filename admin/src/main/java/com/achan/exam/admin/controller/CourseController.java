@@ -25,7 +25,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Api("课程操作")
-@RequestMapping("/api/courses")
+@RequestMapping("/courses")
 @PreAuthorize("hasRole('admin')")
 public class CourseController {
 

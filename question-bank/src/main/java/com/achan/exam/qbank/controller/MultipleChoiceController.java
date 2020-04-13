@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @BaseResponse
-@RequestMapping("/api/questions/mc")
+@RequestMapping("/questions/mc")
 @Api("单选题控制器")
 @PreAuthorize("hasRole('teacher')")
 public class MultipleChoiceController {

@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @BaseResponse
 @Api("用户角色管理")
-@RequestMapping("/api/roles")
+@RequestMapping("/roles")
 public class RoleController {
 
     @GetMapping("/all")
